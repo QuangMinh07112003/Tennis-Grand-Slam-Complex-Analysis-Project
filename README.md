@@ -1,2 +1,3 @@
 # Tennis-Grand-Slam-Complex-Analysis-Project
-Tennis Grand Slam Complex Analysis Project
+This project is to analyze the performances of each player in Grand Slam matches from 2019-2023. This analysis will be highly compensated in the serves and returns performance of each player, while other statistics such as forehand winners, backhand winners, matches played, rally counts, etc. will also be taken into consideration. The analysis will also be distributed into two groups of players: elite players (top players) and non-elite players. The notebook includes my skills and knowledge in data cleaning, data transformation, relational databases, statistics, classification, data visualization, regression models, regression interpretation, correlation matrices, and dashboard construction. This analysis may offer valuable support for optimizing players’ performance and improving coaching strategies for competitive matches.
+
