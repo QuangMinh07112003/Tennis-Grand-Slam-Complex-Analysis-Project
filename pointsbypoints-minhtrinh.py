@@ -15,42 +15,42 @@ from IPython.display import display, HTML
 # In[2]:
 
 
-full23 = pd.read_csv('atp_matches_2023.csv')
+full23 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/atp_matches_2023.csv')
 
 #Import datasets Point by Point
 
 #Australian Open
-ao19 = pd.read_csv('ao19.csv')
-ao20 = pd.read_csv('ao20.csv')
-ao21 = pd.read_csv('ao21.csv')
+ao19 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/ao19.csv')
+ao20 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/ao20.csv')
+ao21 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/ao21.csv')
 
 #Roland Garros
-rg19 = pd.read_csv('rg19.csv')
-rg20 = pd.read_csv('rg20.csv')
-rg21 = pd.read_csv('rg21.csv')
+rg19 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/rg19.csv')
+rg20 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/rg20.csv')
+rg21 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/rg21.csv')
 
 #Wimbledon
-wim19 = pd.read_csv('wim19.csv')
-wim21 = pd.read_csv('wim21.csv')
-wim22 = pd.read_csv('wim22.csv')
-wim23 = pd.read_csv('wim23.csv')
+wim19 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim19.csv')
+wim21 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim21.csv')
+wim22 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim22.csv')
+wim23 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim23.csv')
 
 #US Open
-us19 = pd.read_csv('us19.csv')
-us20 = pd.read_csv('us20.csv')
-us21 = pd.read_csv('us21.csv')
-us22 = pd.read_csv('us22.csv')
-us23 = pd.read_csv('us23.csv')
+us19 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us19.csv')
+us20 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us20.csv')
+us21 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us21.csv')
+us22 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us22.csv')
+us23 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us23.csv')
 
 
 # In[3]:
 
 
-gs19 = pd.read_csv('gs_2019.csv')
-gs20 = pd.read_csv('gs_2020.csv')
-gs21 = pd.read_csv('gs_2021.csv')
-gs22 = pd.read_csv('gs_2022.csv')
-gs23 = pd.read_csv('gs_2023.csv')
+gs19 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/gs_2019.csv')
+gs20 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/gs_2020.csv')
+gs21 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/gs_2021.csv')
+gs22 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/gs_2022.csv')
+gs23 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/gs_2023.csv')
 
 
 
@@ -59,9 +59,9 @@ gs23 = pd.read_csv('gs_2023.csv')
 
 
 #AUSTRALIAN OPEN MATCHES
-ao19_m = pd.read_csv('ao19_m.csv')
-ao20_m = pd.read_csv('ao20_m.csv')
-ao21_m = pd.read_csv('ao21_m.csv')
+ao19_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/ao19_m.csv')
+ao20_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/ao20_m.csv')
+ao21_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/ao21_m.csv')
 
 #print(ao19_m.iloc[126])
 ao19_m = ao19_m.iloc[:127]
@@ -84,9 +84,9 @@ ao_m = pd.concat([ao19_m, ao20_m, ao21_m], axis=0, ignore_index=True)
 
 
 #ROLAND GARROS MATCHES
-rg19_m = pd.read_csv('rg19_m.csv')
-rg20_m = pd.read_csv('rg20_m.csv')
-rg21_m = pd.read_csv('rg21_m.csv')
+rg19_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/rg19_m.csv')
+rg20_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/rg20_m.csv')
+rg21_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/rg21_m.csv')
 
 #print(rg19_m.iloc[126])
 rg19_m = rg19_m.iloc[:127]
@@ -106,10 +106,10 @@ rg_m = pd.concat([rg19_m, rg20_m, rg21_m], axis=0, ignore_index=True)
 
 
 #WIMBLEDON MATCHES
-wim19_m = pd.read_csv('wim19_m.csv')
-wim21_m = pd.read_csv('wim21_m.csv')
-wim22_m = pd.read_csv('wim22_m.csv')
-wim23_m = pd.read_csv('wim23_m.csv')
+wim19_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim19_m.csv')
+wim21_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim21_m.csv')
+wim22_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim22_m.csv')
+wim23_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/wim23_m.csv')
 
 #print(wim19_m.iloc[126])
 wim19_m = wim19_m.iloc[:127]
@@ -133,11 +133,11 @@ wim_m
 
 
 #US OPEN MATCHES
-us19_m = pd.read_csv('us19_m.csv')
-us20_m = pd.read_csv('us20_m.csv')
-us21_m = pd.read_csv('us21_m.csv')
-us22_m = pd.read_csv('us22_m.csv')
-us23_m = pd.read_csv('us23_m.csv')
+us19_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us19_m.csv')
+us20_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us20_m.csv')
+us21_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us21_m.csv')
+us22_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us22_m.csv')
+us23_m = pd.read_csv('/Users/minhtrinh/independentminhtrinh/us23_m.csv')
 
 #Delete women's singles
 #print(us19_m.iloc[124]) #last men's singles match
@@ -401,7 +401,7 @@ table_html = us.head(500).to_html(index=False)
 display(HTML(table_html))
 
 
-# In[23]:
+# In[ ]:
 
 
 import pandas as pd
@@ -441,7 +441,7 @@ match_ids = set(match_ids_p1 + match_ids_p2)
 print(match_ids)
 
 
-# In[24]:
+# In[ ]:
 
 
 # List of match_ids to remove from wim dataset
@@ -454,7 +454,7 @@ wim = wim[~wim['match_id'].isin(remove_match_ids)]
 print(wim)
 
 
-# In[25]:
+# In[ ]:
 
 
 import pandas as pd
@@ -499,7 +499,7 @@ null_percentage = combined_df.groupby('match_id')[['ServeDepth', 'ServeWidth', '
 
 
 
-# In[26]:
+# In[ ]:
 
 
 # Filter match_ids where the null percentage for ServeWidth or ServeDepth is higher than 40%
@@ -512,7 +512,7 @@ print(high_null_match_ids)
 us = us[~us['match_id'].isin(high_null_match_ids)]
 
 
-# In[27]:
+# In[ ]:
 
 
 import pandas as pd
@@ -532,7 +532,7 @@ print(f"Count of 'ND' in ReturnDepth when RallyCount is 2: {count_nd}")
 print(f"Count of 'D' in ReturnDepth when RallyCount is 2: {count_d}")
 
 
-# In[28]:
+# In[ ]:
 
 
 import pandas as pd
@@ -618,7 +618,7 @@ print(complete_data[target].unique())  # Before encoding
 
 
 
-# In[29]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
@@ -713,7 +713,7 @@ plt.show()
 
 
 
-# In[30]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
@@ -811,7 +811,7 @@ plt.yticks([])
 plt.show()
 
 
-# In[31]:
+# In[ ]:
 
 
 import pandas as pd
@@ -839,7 +839,7 @@ print(all_counts)
 
 
 
-# In[32]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
@@ -972,7 +972,7 @@ plt.show()
 
 
 
-# In[33]:
+# In[ ]:
 
 
 import pandas as pd
@@ -998,7 +998,7 @@ all_counts['percentage'] = (all_counts['count'] / total_shots) * 100
 print(all_counts)
 
 
-# In[34]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1009,7 +1009,7 @@ every = pd.concat([us, wim, rg, ao], ignore_index=True)
 every
 
 
-# In[35]:
+# In[ ]:
 
 
 # Standardize names based on the full version of the name
@@ -1049,7 +1049,7 @@ print("\nValue counts for player2:")
 print(player2_counts)
 
 
-# In[36]:
+# In[ ]:
 
 
 # Extract first and last names from player1 and player2
@@ -1078,7 +1078,7 @@ for last_name, first_names in duplicate_last_names.items():
 
 
 
-# In[37]:
+# In[ ]:
 
 
 # Load your image
@@ -1204,7 +1204,7 @@ plt.yticks([])
 plt.show()
 
 
-# In[38]:
+# In[ ]:
 
 
 us['Server_win_point'] = us.apply(lambda row: 1 if row['PointServer'] == row['PointWinner'] else 0, axis=1)
@@ -1214,7 +1214,7 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 
 
 
-# In[39]:
+# In[ ]:
 
 
 ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO BE RETURNED IN US OPEN
@@ -1247,7 +1247,7 @@ result = model.fit()
 print(result.summary())
 
 
-# In[40]:
+# In[ ]:
 
 
 ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO BE RETURNED IN WIMBLEDON
@@ -1280,7 +1280,7 @@ result = model.fit()
 print(result.summary())
 
 
-# In[41]:
+# In[ ]:
 
 
 ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO WIN A POINT IN US OPEN
@@ -1310,7 +1310,7 @@ result = model.fit()
 print(result.summary())
 
 
-# In[42]:
+# In[ ]:
 
 
 ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO WIN A POINT IN WIMBLEDON
@@ -1341,7 +1341,7 @@ result = model.fit()
 print(result.summary())
 
 
-# In[43]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1368,7 +1368,7 @@ print(result.summary())
 
 
 
-# In[44]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1394,7 +1394,7 @@ result = model.fit()
 print(result.summary())
 
 
-# In[45]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1420,7 +1420,7 @@ result = model.fit()
 print(result.summary())
 
 
-# In[46]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1440,7 +1440,7 @@ result = model.fit()
 print(result.summary())
 
 
-# In[47]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1462,7 +1462,7 @@ print(result.summary())
 
 # 
 
-# In[48]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1471,21 +1471,21 @@ import pandas as pd
 gs = pd.concat([gs19, gs20, gs21, gs22, gs23], ignore_index=True)
 
 
-# In[49]:
+# In[ ]:
 
 
 gs = gs[gs['tourney_level'] == "G"]
 gs
 
 
-# In[50]:
+# In[ ]:
 
 
 # Create the DoubleFault column with categorical values
 wimus['DoubleFault'] = pd.Categorical(((wimus['P1DoubleFault'] == 1) | (wimus['P2DoubleFault'] == 1)).astype(int))
 
 
-# In[51]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1536,7 +1536,7 @@ plt.show()
 #loess regression
 
 
-# In[52]:
+# In[ ]:
 
 
 import pandas as pd
@@ -3375,7 +3375,7 @@ gs
 # In[ ]:
 
 
-print(regions_all)
+
 
 
 # In[ ]:
