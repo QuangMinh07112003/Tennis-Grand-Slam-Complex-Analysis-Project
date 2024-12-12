@@ -15,8 +15,6 @@ from IPython.display import display, HTML
 # In[2]:
 
 
-full23 = pd.read_csv('/Users/minhtrinh/independentminhtrinh/atp_matches_2023.csv')
-
 #Import datasets Point by Point
 
 #Australian Open
@@ -401,7 +399,7 @@ table_html = us.head(500).to_html(index=False)
 display(HTML(table_html))
 
 
-# In[ ]:
+# In[23]:
 
 
 import pandas as pd
@@ -441,7 +439,7 @@ match_ids = set(match_ids_p1 + match_ids_p2)
 print(match_ids)
 
 
-# In[ ]:
+# In[24]:
 
 
 # List of match_ids to remove from wim dataset
@@ -454,7 +452,7 @@ wim = wim[~wim['match_id'].isin(remove_match_ids)]
 print(wim)
 
 
-# In[ ]:
+# In[25]:
 
 
 import pandas as pd
@@ -499,7 +497,7 @@ null_percentage = combined_df.groupby('match_id')[['ServeDepth', 'ServeWidth', '
 
 
 
-# In[ ]:
+# In[26]:
 
 
 # Filter match_ids where the null percentage for ServeWidth or ServeDepth is higher than 40%
@@ -512,7 +510,7 @@ print(high_null_match_ids)
 us = us[~us['match_id'].isin(high_null_match_ids)]
 
 
-# In[ ]:
+# In[27]:
 
 
 import pandas as pd
