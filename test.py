@@ -14,7 +14,7 @@ player_stats = pd.read_csv(google_sheet_url)
 
 
 
-# In[4]:
+# In[2]:
 
 
 import panel as pn
@@ -50,16 +50,6 @@ selected_player_widget = pn.widgets.Select(
     width=200,
     sizing_mode="stretch_width"
 )
-image_path = "novakthegoat.jpg"  # Replace with the correct path if it's not in the working directory
-
-if os.path.exists(image_path):
-    sidebar_image = pn.layout.Column(
-        pn.pane.JPG(image_path, width=300, height=200),
-        align="center"
-    )
-else:
-    print(f"Image '{image_path}' not found. Using a placeholder.")
-    sidebar_image = pn.pane.Markdown("### [Image Not Found]")
 
 # Calculate Average Stats for Elite and Non-Elite Players
 elite_avg_stats = player_stats[player_stats["elite_numeric"] == 1].mean(numeric_only=True)
@@ -389,7 +379,6 @@ template = pn.template.FastListTemplate(
         pn.pane.Markdown("# Complex Player Statistics Interactive Dashboard"), 
         pn.pane.Markdown("### This dashboard is presented by Minh Trinh in collaboration with professor Eren Bilen. \n Contact: quangminh711@gmail.com"),
         intro,
-        sidebar_image,
         selected_player_widget
     ],
     main=[
@@ -403,7 +392,7 @@ template = pn.template.FastListTemplate(
     ],
     accent_base_color="#90EE90",  
     header_background="#90EE90", 
-    sidebar_background="#f0f0f0"
+    sidebar_background="#f0f0f0",
     )
 
 
@@ -411,7 +400,7 @@ template.servable()
 template.show()
 
 
-# In[5]:
+# In[ ]:
 
 
 get_ipython().system('jupyter nbconvert --to script test.ipynb')
