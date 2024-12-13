@@ -14,7 +14,7 @@ player_stats = pd.read_csv(google_sheet_url)
 
 
 
-# In[2]:
+# In[4]:
 
 
 import panel as pn
@@ -411,7 +411,7 @@ template.servable()
 template.show()
 
 
-# In[3]:
+# In[5]:
 
 
 get_ipython().system('jupyter nbconvert --to script test.ipynb')
