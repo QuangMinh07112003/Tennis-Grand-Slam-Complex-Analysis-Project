@@ -3357,7 +3357,7 @@ template.servable()
 template.show()
 
 
-# In[110]:
+# In[113]:
 
 
 get_ipython().system('jupyter nbconvert --to script pointsbypoints-minhtrinh.ipynb')
