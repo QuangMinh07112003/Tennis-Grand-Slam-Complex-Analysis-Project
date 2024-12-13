@@ -10,12 +10,6 @@ from IPython.display import display, HTML
 
 
 
-# In[115]:
-
-
-
-
-
 # ## Import data
 
 # In[2]:
@@ -538,82 +532,82 @@ print(f"Count of 'D' in ReturnDepth when RallyCount is 2: {count_d}")
 # In[28]:
 
 
-import pandas as pd
-import numpy as np
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import KFold
-from sklearn.impute import SimpleImputer
+# import pandas as pd
+# import numpy as np
+# from sklearn.neighbors import KNeighborsClassifier
+# from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
+# from sklearn.compose import ColumnTransformer
+# from sklearn.pipeline import Pipeline
+# from sklearn.metrics import accuracy_score
+# from sklearn.model_selection import KFold
+# from sklearn.impute import SimpleImputer
 
-# Features and target
-features = ['ServeWidth', 'ServeDepth', 'Speed_MPH', 'RallyCount', 'ServeNumber']
-target = 'ReturnDepth'
+# # Features and target
+# features = ['ServeWidth', 'ServeDepth', 'Speed_MPH', 'RallyCount', 'ServeNumber']
+# target = 'ReturnDepth'
 
-# Copy the dataset to preserve the original
-# Define the columns to check for NaN values
-columns_to_check = ['ServeWidth', 'ServeDepth', 'Speed_MPH', 'RallyCount',
-                    'ReturnDepth', 'ServeNumber']
+# # Copy the dataset to preserve the original
+# # Define the columns to check for NaN values
+# columns_to_check = ['ServeWidth', 'ServeDepth', 'Speed_MPH', 'RallyCount',
+#                     'ReturnDepth', 'ServeNumber']
 
-# Exclude rows with NaN values in any of the specified columns
-complete_data = us.dropna(subset=columns_to_check)
+# # Exclude rows with NaN values in any of the specified columns
+# complete_data = us.dropna(subset=columns_to_check)
 
-# Identify categorical and numerical features
-categorical_features = ['ServeWidth', 'ServeDepth', 'ServeNumber']
-numerical_features = ['Speed_MPH', 'RallyCount']
+# # Identify categorical and numerical features
+# categorical_features = ['ServeWidth', 'ServeDepth', 'ServeNumber']
+# numerical_features = ['Speed_MPH', 'RallyCount']
 
-# Separate features and target
-X = complete_data[features]
-y = complete_data[target]
+# # Separate features and target
+# X = complete_data[features]
+# y = complete_data[target]
 
-# Initialize LabelEncoder for the target variable
-label_encoder = LabelEncoder()
-y_encoded = label_encoder.fit_transform(y)
+# # Initialize LabelEncoder for the target variable
+# label_encoder = LabelEncoder()
+# y_encoded = label_encoder.fit_transform(y)
 
-# Set up preprocessing for the features
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('num', StandardScaler(), numerical_features),  # Standardize numerical features
-        ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)  # Encode categorical features
-    ]
-)
+# # Set up preprocessing for the features
+# preprocessor = ColumnTransformer(
+#     transformers=[
+#         ('num', StandardScaler(), numerical_features),  # Standardize numerical features
+#         ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)  # Encode categorical features
+#     ]
+# )
 
-# Create a pipeline that first preprocesses and then applies the KNN model
-pipeline = Pipeline(steps=[
-    ('preprocessor', preprocessor),
-    ('classifier', KNeighborsClassifier(n_neighbors=157))
-])
+# # Create a pipeline that first preprocesses and then applies the KNN model
+# pipeline = Pipeline(steps=[
+#     ('preprocessor', preprocessor),
+#     ('classifier', KNeighborsClassifier(n_neighbors=157))
+# ])
 
-# KFold cross-validation setup (5 parts)
-kf = KFold(n_splits=5, shuffle=True, random_state=None)
+# # KFold cross-validation setup (5 parts)
+# kf = KFold(n_splits=5, shuffle=True, random_state=None)
 
-accuracy_list = []
+# accuracy_list = []
 
-for fold, (train_index, test_index) in enumerate(kf.split(X)):
-    # Split the data into training and testing sets
-    X_train, X_test = X.iloc[train_index], X.iloc[test_index]
-    y_train, y_test = y_encoded[train_index], y_encoded[test_index]
+# for fold, (train_index, test_index) in enumerate(kf.split(X)):
+#     # Split the data into training and testing sets
+#     X_train, X_test = X.iloc[train_index], X.iloc[test_index]
+#     y_train, y_test = y_encoded[train_index], y_encoded[test_index]
     
-    # Fit the pipeline and predict
-    pipeline.fit(X_train, y_train)
-    y_pred = pipeline.predict(X_test)
+#     # Fit the pipeline and predict
+#     pipeline.fit(X_train, y_train)
+#     y_pred = pipeline.predict(X_test)
     
-    # Calculate accuracy
-    accuracy = accuracy_score(y_test, y_pred)
-    accuracy_list.append(accuracy)
+#     # Calculate accuracy
+#     accuracy = accuracy_score(y_test, y_pred)
+#     accuracy_list.append(accuracy)
     
-    print(f'Fold {fold+1}:')
-    print(f'  Training samples: {len(train_index)}')
-    print(f'  Testing samples: {len(test_index)}')
-    print(f'  Accuracy: {accuracy:.4f}\n')
+#     print(f'Fold {fold+1}:')
+#     print(f'  Training samples: {len(train_index)}')
+#     print(f'  Testing samples: {len(test_index)}')
+#     print(f'  Accuracy: {accuracy:.4f}\n')
 
-# Calculate average accuracy
-average_accuracy = np.mean(accuracy_list)
-print(f'Average accuracy across 5 folds: {average_accuracy:.4f}')
+# # Calculate average accuracy
+# average_accuracy = np.mean(accuracy_list)
+# print(f'Average accuracy across 5 folds: {average_accuracy:.4f}')
 
-print(complete_data[target].unique())  # Before encoding
+# print(complete_data[target].unique())  # Before encoding
 
 
 
@@ -1565,7 +1559,7 @@ grouped_data = wimus_long.groupby('player_name').agg(
 
 
 
-# In[53]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1661,7 +1655,7 @@ player_stats = pd.merge(player_stats, matches_played, how='left', on='player_nam
 player_stats
 
 
-# In[54]:
+# In[ ]:
 
 
 # Ensure matches_as_winner is a Series with player_name as index
@@ -1677,7 +1671,7 @@ player_stats['Match_Win_Percentage'] = (player_stats['matches_as_winner'] / play
 player_stats
 
 
-# In[55]:
+# In[ ]:
 
 
 # Now map the heights as before
@@ -1688,7 +1682,7 @@ loser_ht_map = dict(zip(gs['loser_name'], gs['loser_ht']))
 player_stats['height'] = player_stats['player_name'].map(winner_ht_map).fillna(player_stats['player_name'].map(loser_ht_map))
 
 
-# In[56]:
+# In[ ]:
 
 
 # Create a dictionary to map player_name to their height (both winners and losers)
@@ -1700,7 +1694,7 @@ player_stats['height'] = player_stats['player_name'].map(winner_ht_map).fillna(p
 
 
 
-# In[57]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1717,7 +1711,7 @@ player_stats = player_stats[na_counts <= 5]
 
 
 
-# In[58]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1762,7 +1756,7 @@ merged_stats = merge_and_aggregate(gs, player_stats)
 merged_stats
 
 
-# In[59]:
+# In[ ]:
 
 
 # Filter for matches where Adrian Mannarino appears as a winner or loser
@@ -1778,7 +1772,7 @@ mannarino_1stIn = (
 print(f"Total 1stIn for Adrian Mannarino: {mannarino_1stIn}")
 
 
-# In[60]:
+# In[ ]:
 
 
 # Count appearances as a winner
@@ -1794,7 +1788,7 @@ print(f"Adrian Mannarino appeared in {mannarino_total_appearances} matches.")
 print(f"As winner: {mannarino_as_winner}, As loser: {mannarino_as_loser}")
 
 
-# In[61]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1842,7 +1836,7 @@ player_stats = classify_rank_elite(gs, player_stats)
 
 
 
-# In[62]:
+# In[ ]:
 
 
 # Filter the players where rank_elite is 'E'
@@ -1852,7 +1846,7 @@ elite_players = player_stats[player_stats['rank_elite'] == 'E']['player_name'].t
 print(elite_players)
 
 
-# In[63]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1899,7 +1893,7 @@ plot_avg_1st_serve_by_rank_elite(player_stats)
 
 
 
-# In[64]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1946,7 +1940,7 @@ plot_avg_1st_serve_by_rank_elite(player_stats)
 
 # This implies that in fact the Elite player has a weaker serve in terms of speed, which suggested that speed is not a significant key component for being a great player. 
 
-# In[65]:
+# In[ ]:
 
 
 import pandas as pd
@@ -1981,7 +1975,7 @@ def plot_pie_charts_for_serve_depth_width(player_stats):
 plot_pie_charts_for_serve_depth_width(player_stats)
 
 
-# In[66]:
+# In[ ]:
 
 
 import pandas as pd
@@ -2023,7 +2017,7 @@ plot_pie_charts_for_return_depth(player_stats)
 
 # This graph implies that the variations and percentage of service position does not significantly contribute to the differences in performance between elite players and non elite players
 
-# In[67]:
+# In[ ]:
 
 
 # Assuming '1stIn', '1stWon', and 'match_played' are existing columns in the player_stats DataFrame
@@ -2036,7 +2030,7 @@ player_stats['1stWon_per_match'] = player_stats['1stWon'] / player_stats['match_
 player_stats[['player_name', '1stIn', '1stWon', 'match_played', '1stIn_per_match', '1stWon_per_match']].head()
 
 
-# In[68]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
@@ -2078,7 +2072,7 @@ plt.show()
 
 # This implies that the elite players have a considerable average number of 1st serve in and 1st serve won compared to the non-elite players, with about 20 units for each category. Even though by percentage, 20 units is not that significant, however, during professional matches, every point matters, and 20 points are about 5 games of tennis. These 20 points only counts for 1st Serve In and 1st Serve Won, not to mention 2nd Serves, which differentiates between great players and those who are yet to be. 
 
-# In[69]:
+# In[ ]:
 
 
 player_stats['2ndWon_per_match'] = player_stats['2ndWon'] / player_stats['match_played']
@@ -2095,7 +2089,7 @@ player_stats[['player_name', '1stIn', '1stWon', 'match_played', '1stIn_per_match
 player_stats = player_stats.dropna(thresh=player_stats.shape[1] - 5)
 
 
-# In[70]:
+# In[ ]:
 
 
 # Group the data by 'rank_elite' and calculate the mean for each variable
@@ -2150,7 +2144,7 @@ plt.show()
 
 # The graphs also imply that the elite players took the edge of number of 2nd Serve Point won per matches compared to the non-elite ones, by average of 6 points. In total for both first and second serve point, the elite players edged by 26 points, which is a significant number in professional tennis. Although they have fewer break point saved than their non-elite counterparts, it may be due to the fact that they faced considerably fewer break points than the non-elite. In terms of break point saved % (saved/faced), elite players again edged the non-elite by 6%, implying that the elites are clutcher. 
 
-# In[71]:
+# In[ ]:
 
 
 wimus['0-4'] = wimus['RallyCount'].apply(lambda x: 1 if 0 <= x <= 4 else 0)
@@ -2160,7 +2154,7 @@ wimus['9+'] = wimus['RallyCount'].apply(lambda x: 1 if x >= 9 else 0)
 
 
 
-# In[72]:
+# In[ ]:
 
 
 # Create columns for wins and losses by rally categories
@@ -2204,7 +2198,7 @@ result['9+_%'] = result['9+_w']*100 / (result['9+_w'] + result['9+_l'])
 
 
 
-# In[73]:
+# In[ ]:
 
 
 # Merge the result DataFrame (containing percentage columns) with player_stats
@@ -2215,7 +2209,7 @@ player_stats = player_stats.merge(result[['player_name', '0-4_%', '5-8_%', '9+_%
 
 
 
-# In[74]:
+# In[ ]:
 
 
 import pandas as pd
@@ -2243,7 +2237,7 @@ print(model.summary())
 # This regression model suggest that an 1cm increase in height may result in a 0.3 km/h increase in average first serve speed. It shows positive correlational relationship between the players' height and their average first serve speed.
 # 
 
-# In[75]:
+# In[ ]:
 
 
 import pandas as pd
@@ -2263,7 +2257,7 @@ deficit = last_points_per_match[['match_id', 'player1', 'player2', 'P1PointsWon'
 deficit
 
 
-# In[76]:
+# In[ ]:
 
 
 # Step 1: Sum P1Deficit for player1 and P2Deficit for player2, then combine them
@@ -2282,7 +2276,7 @@ total_def = total_def.rename(columns={'index': 'player_name'})
 total_def
 
 
-# In[77]:
+# In[ ]:
 
 
 # Step 1: Calculate total deficits by player across both `player1` and `player2`
@@ -2311,7 +2305,7 @@ player_stats
 #
 
 
-# In[78]:
+# In[ ]:
 
 
 player_stats['avg_deficit'] = player_stats['total_deficit'] / player_stats['match_played']
@@ -2319,7 +2313,7 @@ player_stats['avg_deficit'] = player_stats['total_deficit'] / player_stats['matc
 player_stats
 
 
-# In[79]:
+# In[ ]:
 
 
 player_stats['elite_numeric'] = player_stats['rank_elite'].map({'E': 1, 'NE': 0})
@@ -2352,13 +2346,13 @@ print(result.summary())
 # ## Regression Model Interpretation
 # The regression suggests that the number of 1st Serve In or 1st Serve Won has limited impact to the change in average deficit of the matches, while the fact a player is an elite or non-elite played a significant impact, as if one is an elite, they may earn more than 10 points compared to non-elite counterparts on average. Regarding the factor 1st Serve In multiplies with 1st Serve Won, it has little to no relationship with average deficit points per match. 
 
-# In[80]:
+# In[ ]:
 
 
 gs
 
 
-# In[81]:
+# In[ ]:
 
 
 import seaborn as sns
@@ -2382,7 +2376,7 @@ plt.show()
 # The linear regression suggests that the majority of data points is located below median of both variables, which means most matches are played between players with points below median.There is a wide spread of loser rank points for any given winner rank point, indicating variability in the rank points of losers. Some matches involve losers with very high rank points, which are outliers compared to the general trend.
 # 
 
-# In[82]:
+# In[ ]:
 
 
 # Scatterplot with linear regression line
@@ -2405,7 +2399,7 @@ plt.show()
 # P/S:
 # 
 
-# In[83]:
+# In[ ]:
 
 
 # Assuming player_stats has already been defined with Forehand_Winners, Backhand_Winners, and match_played
@@ -2415,7 +2409,7 @@ player_stats['avg_Forehand'] = player_stats['Forehand_Winners'] / player_stats['
 player_stats['avg_Backhand'] = player_stats['Backhand_Winners'] / player_stats['match_played']
 
 
-# In[84]:
+# In[ ]:
 
 
 import statsmodels.api as sm
@@ -2437,7 +2431,7 @@ print(logit_result.summary())
 
 
 
-# In[85]:
+# In[ ]:
 
 
 import statsmodels.api as sm
@@ -2498,7 +2492,7 @@ y_elite = regression_data_elite['avg_deficit_binary']
 
 
 
-# In[86]:
+# In[ ]:
 
 
 # Plot the heatmap
@@ -2527,7 +2521,7 @@ plt.show()
 # 
 # Elite_numeric and ranking points have strong positive correlation (0.77) as the elite players are mostly top players who earn higher ranking points that others.
 
-# In[87]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
@@ -2562,13 +2556,13 @@ plt.show()
 
 # 
 
-# In[88]:
+# In[ ]:
 
 
 player_stats
 
 
-# In[89]:
+# In[ ]:
 
 
 # Save as Excel
@@ -2577,13 +2571,13 @@ player_stats
 
 # ## Create Dashboard
 
-# In[90]:
+# In[ ]:
 
 
 player_stats
 
 
-# In[91]:
+# In[ ]:
 
 
 # Calculate averages
@@ -2591,37 +2585,37 @@ player_stats['avg_ace'] = player_stats['ace'] / player_stats['match_played']
 player_stats['avg_df'] = player_stats['df'] / player_stats['match_played']
 
 
-# In[92]:
+# In[ ]:
 
 
 player_stats.columns
 
 
-# In[93]:
+# In[ ]:
 
 
 player_stats.to_excel('player_stats.xlsx', index=False, engine='openpyxl')
 
 
-# In[94]:
+# In[ ]:
 
 
 wimus
 
 
-# In[95]:
+# In[ ]:
 
 
 #wimus.to_excel('wimuspoint.xlsx', index=False, engine='openpyxl')
 
 
-# In[96]:
+# In[ ]:
 
 
 player_stats.columns
 
 
-# In[97]:
+# In[ ]:
 
 
 # import plotly.express as px # type: ignore
@@ -2720,7 +2714,7 @@ player_stats.columns
 
 # ## Analyze the Serve/Return patterns of each player
 
-# In[98]:
+# In[ ]:
 
 
 import pandas as pd
@@ -2739,7 +2733,7 @@ pat = wimus[selected_columns]
 
 
 
-# In[99]:
+# In[ ]:
 
 
 pat = pat.copy()
@@ -2758,7 +2752,7 @@ pat['GameConcat'] = pat.apply(
 
 
 
-# In[100]:
+# In[ ]:
 
 
 # Shift the ScoreConcat and GameConcat columns by 1 to assign previous row values
@@ -2775,13 +2769,13 @@ pat.loc[pat['PointNumber'].astype(str).str.startswith('0X'), ['Score', 'Games']]
 pat.iloc[-1, pat.columns.get_loc('Score')] = pat.iloc[-2]['ScoreConcat']
 
 
-# In[101]:
+# In[ ]:
 
 
 pat.head(200)
 
 
-# In[102]:
+# In[ ]:
 
 
 # Create player1_e and player2_e columns
@@ -2798,7 +2792,7 @@ pat['player2_e'] = pat['player2'].apply(lambda x: 1 if x in top_players else 0)
 pat
 
 
-# In[103]:
+# In[ ]:
 
 
 import seaborn as sns
@@ -2835,7 +2829,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[104]:
+# In[ ]:
 
 
 # ServeWidth distribution
@@ -2855,7 +2849,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[105]:
+# In[ ]:
 
 
 import seaborn as sns
@@ -2895,7 +2889,7 @@ plt.show()
 
 
 
-# In[106]:
+# In[ ]:
 
 
 # ServeWidth distribution
@@ -2915,7 +2909,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[107]:
+# In[ ]:
 
 
 import seaborn as sns
@@ -2949,7 +2943,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[108]:
+# In[ ]:
 
 
 # 1. Filter for specific Score values
@@ -2981,7 +2975,7 @@ plt.show()
 
 # # FINAL DASHBOARD
 
-# In[109]:
+# In[ ]:
 
 
 import panel as pn
@@ -3357,7 +3351,7 @@ template.servable()
 template.show()
 
 
-# In[116]:
+# In[ ]:
 
 
 get_ipython().system('jupyter nbconvert --to script pointsbypoints-minhtrinh.ipynb')
