@@ -10,10 +10,10 @@ from IPython.display import display, HTML
 
 
 
-# In[112]:
+# In[115]:
 
 
-import sklearn
+
 
 
 # ## Import data
@@ -3357,7 +3357,7 @@ template.servable()
 template.show()
 
 
-# In[113]:
+# In[116]:
 
 
 get_ipython().system('jupyter nbconvert --to script pointsbypoints-minhtrinh.ipynb')
