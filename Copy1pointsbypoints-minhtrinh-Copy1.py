@@ -157,7 +157,7 @@ us23_m = us23_m.iloc[:127]
 #Concatenate all datasets into US Open dataset 'us'
 us_m = pd.concat([us19_m, us20_m, us21_m, us22_m, us23_m], axis=0, ignore_index=True)
 
-us_m
+
 
 
 
@@ -169,7 +169,6 @@ us_m
 gs_m = pd.concat([ao_m, rg_m, wim_m, us_m], ignore_index=True)
 
 # Display the resulting merged DataFrame
-print(gs_m)
 
 
 # In[9]:
@@ -193,7 +192,6 @@ us = pd.merge(us, us_m[['match_id', 'player1', 'player2']], on='match_id', how='
 us = us.dropna(subset=['player1', 'player2'])
 
 # Print the updated DataFrame
-print(us)
 
 
 # In[11]:
@@ -210,10 +208,6 @@ rg = rg.dropna(subset=['player1', 'player2'])
 ao = ao.dropna(subset=['player1', 'player2'])
 
 
-# Print the updated DataFrame
-print(wim.tail())
-print(rg.tail())
-print(ao.tail())
 
 
 # In[12]:
@@ -229,7 +223,7 @@ print(null_percentage.count)
 columns_with_null_above_40 = null_percentage[null_percentage < 40].index
 
 # Display the column names
-print(f"Columns with more than 40% null values: {list(columns_with_null_above_40)}")
+#print(f"Columns with more than 40% null values: {list(columns_with_null_above_40)}")
 
 
 # In[13]:
@@ -378,29 +372,6 @@ wim.loc[condition1, 'ReturnDepth'] = '0'
 # In[21]:
 
 
-nan_percentage = ao.isna().mean() * 100
-nan_percentage1 = rg.isna().mean() * 100
-
-print(nan_percentage)
-print(nan_percentage1)
-
-
-# In[22]:
-
-
-pd.set_option('display.max_columns', None)  # Show all columns
-pd.set_option('display.max_rows', 500)      # Show 200 rows
-
-# Generate HTML table for the first 200 rows without column names
-table_html = us.head(500).to_html(index=False)
-
-# Display the HTML table
-display(HTML(table_html))
-
-
-# In[23]:
-
-
 import pandas as pd
 
 def find_match_with_consecutive_zeros(df, column, threshold=50):
@@ -438,7 +409,7 @@ match_ids = set(match_ids_p1 + match_ids_p2)
 print(match_ids)
 
 
-# In[24]:
+# In[22]:
 
 
 # List of match_ids to remove from wim dataset
@@ -451,7 +422,7 @@ wim = wim[~wim['match_id'].isin(remove_match_ids)]
 print(wim)
 
 
-# In[25]:
+# In[23]:
 
 
 import pandas as pd
@@ -496,7 +467,7 @@ null_percentage = combined_df.groupby('match_id')[['ServeDepth', 'ServeWidth', '
 
 
 
-# In[26]:
+# In[24]:
 
 
 # Filter match_ids where the null percentage for ServeWidth or ServeDepth is higher than 40%
@@ -509,7 +480,7 @@ print(high_null_match_ids)
 us = us[~us['match_id'].isin(high_null_match_ids)]
 
 
-# In[27]:
+# In[25]:
 
 
 import pandas as pd
@@ -529,7 +500,7 @@ print(f"Count of 'ND' in ReturnDepth when RallyCount is 2: {count_nd}")
 print(f"Count of 'D' in ReturnDepth when RallyCount is 2: {count_d}")
 
 
-# In[28]:
+# In[26]:
 
 
 # import pandas as pd
@@ -615,603 +586,603 @@ print(f"Count of 'D' in ReturnDepth when RallyCount is 2: {count_d}")
 
 
 
+# In[27]:
+
+
+# import matplotlib.pyplot as plt
+# import matplotlib.patches as patches
+# import matplotlib.image as mpimg
+
+# # Load your image
+# court_img = mpimg.imread('wimbledon_grass_court.jpg')
+
+# # Example counts of "Not Deep" (ND), "Deep" (D), and "Missed" (M) returns
+# nd_count = wim[wim['ReturnDepth'] == 'ND'].shape[0]
+# d_count = wim[wim['ReturnDepth'] == 'D'].shape[0]
+# m_count = wim[(wim['ReturnDepth'] == 'M') | (wim['ReturnDepth'] == '0')].shape[0]
+
+# # Total returns
+# total_count = nd_count + d_count + m_count
+
+# # Calculate percentages
+# nd_percentage = (nd_count / total_count) * 100
+# d_percentage = (d_count / total_count) * 100
+# m_percentage = (m_count / total_count) * 100
+
+# # Define court boundaries (adjust these depending on the image resolution)
+# court_x_min, court_x_max = 0, 80
+# court_y_min, court_y_max = 0, 100  # Example values, adjust to match your court image
+
+# # Coordinates for the shaded areas
+# # "Not Deep" region (net to service line)
+# not_deep_x_min = 22
+# not_deep_x_max = 58
+# not_deep_y_min = 26
+# not_deep_y_max = 46
+
+# # "Deep" region (service line to baseline)
+# deep_x_min = 22
+# deep_x_max = 58
+# deep_y_min = 5
+# deep_y_max = 26
+
+# # Display the tennis court image
+# plt.figure(figsize=(16, 8))
+
+# plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
+
+# # Create shaded area for "Not Deep"
+# plt.gca().add_patch(patches.Rectangle((not_deep_x_min, not_deep_y_min), 
+#                                        not_deep_x_max - not_deep_x_min, 
+#                                        not_deep_y_max - not_deep_y_min,
+#                                        linewidth=1, edgecolor='none', facecolor='lightblue', alpha=0.3))
+
+# # Create shaded area for "Deep"
+# plt.gca().add_patch(patches.Rectangle((deep_x_min, deep_y_min), 
+#                                        deep_x_max - deep_x_min, 
+#                                        deep_y_max - deep_y_min,
+#                                        linewidth=1, edgecolor='none', facecolor='yellow', alpha=0.3))
+
+# # Create shaded area for "Missed" (rectangles based on your specifications)
+
+# plt.gca().add_patch(patches.Rectangle((0, 5), 22, 41, 
+#                                        linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+
+# plt.gca().add_patch(patches.Rectangle((0, 0), 80, 5, 
+#                                        linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+
+# plt.gca().add_patch(patches.Rectangle((58, 5), 22, 41, 
+#                                        linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+
+# # Add text to display the percentage and total counts
+# plt.text((not_deep_x_min + not_deep_x_max) / 2, (not_deep_y_min + not_deep_y_max) / 2, 
+#          f'Not Deep\n{nd_percentage:.1f}% ({nd_count})', color='white', fontsize=12,
+#          ha='center', va='center', bbox=dict(facecolor='blue', alpha=0.5))
+
+# plt.text((deep_x_min + deep_x_max) / 2, (deep_y_min + deep_y_max) / 2, 
+#          f'Deep\n{d_percentage:.1f}% ({d_count})', color='black', fontsize=12,
+#          ha='center', va='center', bbox=dict(facecolor='red', alpha=0.5))
+
+# plt.text((court_x_min + 5), 
+#          (court_y_max - 90), 
+#          f'Missed or 0\n{m_percentage:.1f}% ({m_count})', color='white', fontsize=9,
+#          ha='left', va='top', bbox=dict(facecolor='red', alpha=0.5))
+
+# plt.xlabel('Court X (width)')
+# plt.ylabel('Court Y (length)')
+# plt.title('Return Depth and Missed Distribution in Men Singles on Wimbledon 2019-2023')
+
+# # Hide axis ticks
+# plt.xticks([])
+# plt.yticks([])
+
+# # Show the plot
+# plt.show()
+
+
+
+# In[28]:
+
+
+# import matplotlib.pyplot as plt
+# import matplotlib.patches as patches
+# import matplotlib.image as mpimg
+
+# # Load your image
+# court_img = mpimg.imread('usopencourt.jpg')
+
+# # Example counts of "Not Deep" (ND), "Deep" (D), and "Missed" (M) returns
+# nd_count = us[us['ReturnDepth'] == 'ND'].shape[0]
+# d_count = us[us['ReturnDepth'] == 'D'].shape[0]
+# m_count = us[(us['ReturnDepth'] == 'M') | (us['ReturnDepth'] == '0')].shape[0]
+
+# # Total returns
+# total_count = nd_count + d_count + m_count
+
+# # Calculate percentages
+# nd_percentage = (nd_count / total_count) * 100
+# d_percentage = (d_count / total_count) * 100
+# m_percentage = (m_count / total_count) * 100
+
+# # Define court boundaries (adjust these depending on the image resolution)
+# court_x_min, court_x_max = 0, 80
+# court_y_min, court_y_max = 0, 100  # Example values, adjust to match your court image
+
+# # Coordinates for the shaded areas
+# # "Not Deep" region (net to service line)
+# not_deep_x_min = 19
+# not_deep_x_max = 61
+# not_deep_y_min = 25
+# not_deep_y_max = 50
+
+# # "Deep" region (service line to baseline)
+# deep_x_min = 19
+# deep_x_max = 61
+# deep_y_min = 7
+# deep_y_max = 25
+
+# # Display the tennis court image
+# plt.figure(figsize=(16, 8))
+
+# plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
+
+# # Create shaded area for "Not Deep"
+# plt.gca().add_patch(patches.Rectangle((not_deep_x_min, not_deep_y_min), 
+#                                        not_deep_x_max - not_deep_x_min, 
+#                                        not_deep_y_max - not_deep_y_min,
+#                                        linewidth=1, edgecolor='none', facecolor='grey', alpha=0.3))
+
+# # Create shaded area for "Deep"
+# plt.gca().add_patch(patches.Rectangle((deep_x_min, deep_y_min), 
+#                                        deep_x_max - deep_x_min, 
+#                                        deep_y_max - deep_y_min,
+#                                        linewidth=1, edgecolor='none', facecolor='yellow', alpha=0.3))
+
+# # Create shaded area for "Missed" (rectangles based on your specifications)
+
+# # Rectangle (0, 5) to (22, 46)
+# plt.gca().add_patch(patches.Rectangle((0, 7), 19, 43, 
+#                                        linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+
+# # Rectangle (0, 0) to (80, 5)
+# plt.gca().add_patch(patches.Rectangle((0, 0), 80, 7, 
+#                                        linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+
+# # Rectangle (58, 5) to (80, 46)
+# plt.gca().add_patch(patches.Rectangle((61, 7), 22, 43, 
+#                                        linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+
+# # Add text to display the percentage and total counts
+# plt.text((not_deep_x_min + not_deep_x_max) / 2, (not_deep_y_min + not_deep_y_max) / 2, 
+#          f'Not Deep\n{nd_percentage:.1f}% ({nd_count})', color='white', fontsize=12,
+#          ha='center', va='center', bbox=dict(facecolor='blue', alpha=0.5))
+
+# plt.text((deep_x_min + deep_x_max) / 2, (deep_y_min + deep_y_max) / 2, 
+#          f'Deep\n{d_percentage:.1f}% ({d_count})', color='black', fontsize=12,
+#          ha='center', va='center', bbox=dict(facecolor='yellow', alpha=0.5))
+
+# plt.text((court_x_min + 5), 
+#          (court_y_max - 90), 
+#          f'Missed or 0\n{m_percentage:.1f}% ({m_count})', color='white', fontsize=9,
+#          ha='left', va='top', bbox=dict(facecolor='red', alpha=0.5))
+
+# # Set axis labels and title
+# plt.xlabel('Court X (width)')
+# plt.ylabel('Court Y (length)')
+# plt.title('Return Depth and Missed Distribution in Men Singles on Wimbledon 2019-2023')
+
+# # Hide axis ticks
+# plt.xticks([])
+# plt.yticks([])
+
+# # Show the plot
+# plt.show()
+
+
 # In[29]:
 
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import matplotlib.image as mpimg
+# import pandas as pd
 
-# Load your image
-court_img = mpimg.imread('wimbledon_grass_court.jpg')
+# # Define all possible combinations of ServeDepth and ServeWidth
+# serve_depths = ['CTL', 'NCTL','0']
+# serve_widths = ['W', 'BW', 'B', 'BC', 'C','0']
 
-# Example counts of "Not Deep" (ND), "Deep" (D), and "Missed" (M) returns
-nd_count = wim[wim['ReturnDepth'] == 'ND'].shape[0]
-d_count = wim[wim['ReturnDepth'] == 'D'].shape[0]
-m_count = wim[(wim['ReturnDepth'] == 'M') | (wim['ReturnDepth'] == '0')].shape[0]
+# # Create a DataFrame with all combinations
+# all_combinations = pd.MultiIndex.from_product([serve_depths, serve_widths], names=['ServeDepth', 'ServeWidth'])
+# all_counts = pd.DataFrame(index=all_combinations).reset_index()
 
-# Total returns
-total_count = nd_count + d_count + m_count
+# # Count the occurrences of each combination
+# counts = us.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
+# total_shots = us.shape[0]
 
-# Calculate percentages
-nd_percentage = (nd_count / total_count) * 100
-d_percentage = (d_count / total_count) * 100
-m_percentage = (m_count / total_count) * 100
+# # Merge the counts with all combinations to fill in missing combinations with zero counts
+# all_counts = all_counts.merge(counts, on=['ServeDepth', 'ServeWidth'], how='left').fillna(0)
 
-# Define court boundaries (adjust these depending on the image resolution)
-court_x_min, court_x_max = 0, 80
-court_y_min, court_y_max = 0, 100  # Example values, adjust to match your court image
+# # Calculate percentages
+# all_counts['percentage'] = (all_counts['count'] / total_shots) * 100
 
-# Coordinates for the shaded areas
-# "Not Deep" region (net to service line)
-not_deep_x_min = 22
-not_deep_x_max = 58
-not_deep_y_min = 26
-not_deep_y_max = 46
-
-# "Deep" region (service line to baseline)
-deep_x_min = 22
-deep_x_max = 58
-deep_y_min = 5
-deep_y_max = 26
-
-# Display the tennis court image
-plt.figure(figsize=(16, 8))
-
-plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
-
-# Create shaded area for "Not Deep"
-plt.gca().add_patch(patches.Rectangle((not_deep_x_min, not_deep_y_min), 
-                                       not_deep_x_max - not_deep_x_min, 
-                                       not_deep_y_max - not_deep_y_min,
-                                       linewidth=1, edgecolor='none', facecolor='lightblue', alpha=0.3))
-
-# Create shaded area for "Deep"
-plt.gca().add_patch(patches.Rectangle((deep_x_min, deep_y_min), 
-                                       deep_x_max - deep_x_min, 
-                                       deep_y_max - deep_y_min,
-                                       linewidth=1, edgecolor='none', facecolor='yellow', alpha=0.3))
-
-# Create shaded area for "Missed" (rectangles based on your specifications)
-
-plt.gca().add_patch(patches.Rectangle((0, 5), 22, 41, 
-                                       linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
-
-plt.gca().add_patch(patches.Rectangle((0, 0), 80, 5, 
-                                       linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
-
-plt.gca().add_patch(patches.Rectangle((58, 5), 22, 41, 
-                                       linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
-
-# Add text to display the percentage and total counts
-plt.text((not_deep_x_min + not_deep_x_max) / 2, (not_deep_y_min + not_deep_y_max) / 2, 
-         f'Not Deep\n{nd_percentage:.1f}% ({nd_count})', color='white', fontsize=12,
-         ha='center', va='center', bbox=dict(facecolor='blue', alpha=0.5))
-
-plt.text((deep_x_min + deep_x_max) / 2, (deep_y_min + deep_y_max) / 2, 
-         f'Deep\n{d_percentage:.1f}% ({d_count})', color='black', fontsize=12,
-         ha='center', va='center', bbox=dict(facecolor='red', alpha=0.5))
-
-plt.text((court_x_min + 5), 
-         (court_y_max - 90), 
-         f'Missed or 0\n{m_percentage:.1f}% ({m_count})', color='white', fontsize=9,
-         ha='left', va='top', bbox=dict(facecolor='red', alpha=0.5))
-
-plt.xlabel('Court X (width)')
-plt.ylabel('Court Y (length)')
-plt.title('Return Depth and Missed Distribution in Men Singles on Wimbledon 2019-2023')
-
-# Hide axis ticks
-plt.xticks([])
-plt.yticks([])
-
-# Show the plot
-plt.show()
+# # Display the counts and percentages
+# print(all_counts)
 
 
 
 # In[30]:
 
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import matplotlib.image as mpimg
+# import matplotlib.pyplot as plt
+# import matplotlib.patches as patches
+# import matplotlib.image as mpimg
 
-# Load your image
-court_img = mpimg.imread('usopencourt.jpg')
+# # Load your image
+# court_img = mpimg.imread('usopencourt.jpg')
 
-# Example counts of "Not Deep" (ND), "Deep" (D), and "Missed" (M) returns
-nd_count = us[us['ReturnDepth'] == 'ND'].shape[0]
-d_count = us[us['ReturnDepth'] == 'D'].shape[0]
-m_count = us[(us['ReturnDepth'] == 'M') | (us['ReturnDepth'] == '0')].shape[0]
+# # Total shots in the dataset
+# total_shots = us.shape[0]
 
-# Total returns
-total_count = nd_count + d_count + m_count
+# # Calculate the counts for ServeDepth and ServeWidth categories
+# serve_depth_width_counts = us.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
 
-# Calculate percentages
-nd_percentage = (nd_count / total_count) * 100
-d_percentage = (d_count / total_count) * 100
-m_percentage = (m_count / total_count) * 100
+# # ServeDepth and ServeWidth categories counts
+# ctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'CTL']
+# nctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'NCTL']
 
-# Define court boundaries (adjust these depending on the image resolution)
-court_x_min, court_x_max = 0, 80
-court_y_min, court_y_max = 0, 100  # Example values, adjust to match your court image
+# # Calculate percentages for CTL and NCTL
+# ctl_counts['percentage'] = (ctl_counts['count'] / total_shots) * 100
+# nctl_counts['percentage'] = (nctl_counts['count'] / total_shots) * 100
 
-# Coordinates for the shaded areas
-# "Not Deep" region (net to service line)
-not_deep_x_min = 19
-not_deep_x_max = 61
-not_deep_y_min = 25
-not_deep_y_max = 50
+# # Display the tennis court image
+# plt.figure(figsize=(16, 8))
+# plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
 
-# "Deep" region (service line to baseline)
-deep_x_min = 19
-deep_x_max = 61
-deep_y_min = 7
-deep_y_max = 25
+# # Define the coordinates for ServeDepth and ServeWidth regions
+# # Adjust these coordinates based on your image size
 
-# Display the tennis court image
-plt.figure(figsize=(16, 8))
+# # "CTL" (Close to the Line) ServeWidth categories (black to white)
+# regions_ctl = {
+#     'B': {'x_min': 27, 'x_max': 31, 'y_min': 25, 'y_max': 38, 'count': 1577.0, 'percentage': 1.294735, 'color': '#000000'},  # Black (fewest)
+#     'BC': {'x_min': 31, 'x_max': 35, 'y_min': 25, 'y_max': 38, 'count': 3705.0, 'percentage': 3.041847, 'color': '#404040'},  # Dark Gray
+#     'C': {'x_min': 35, 'x_max': 39.5, 'y_min': 25, 'y_max': 38, 'count': 6610.0, 'percentage': 5.426885, 'color': '#808080'},  # Medium Gray
+#     'BW': {'x_min': 23, 'x_max': 27, 'y_min': 25, 'y_max': 38, 'count': 2800.0, 'percentage': 2.298832, 'color': '#b3b3b3'},  # Light Gray
+#     'W': {'x_min': 19, 'x_max': 23, 'y_min': 25, 'y_max': 38, 'count': 18680.0, 'percentage': 15.336491, 'color': '#ffffff'},  # White (most)
+# }
 
-plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
+# # "NCTL" (Not Close to the Line) ServeWidth categories (black to white)
+# regions_nctl = {
+#     'W': {'x_min': 19, 'x_max': 23, 'y_min': 38, 'y_max': 50, 'count': 7175.0, 'percentage': 5.890756, 'color': '#d9d9d9'},  # Light Gray
+#     'B': {'x_min': 27, 'x_max': 31, 'y_min': 38, 'y_max': 50, 'count': 9987.0, 'percentage': 8.199440, 'color': '#808080'},  # Dark Gray
+#     'BW': {'x_min': 23, 'x_max': 27, 'y_min': 38, 'y_max': 50, 'count': 19675.0, 'percentage': 16.153398, 'color': '#4d4d4d'},  # Darker Gray
+#     'BC': {'x_min': 31, 'x_max': 35, 'y_min': 38, 'y_max': 50, 'count': 16245.0, 'percentage': 13.337329, 'color': '#b3b3b3'},  # Medium Gray
+#     'C': {'x_min': 35, 'x_max': 39.5, 'y_min': 38, 'y_max': 50, 'count': 25482.0, 'percentage': 20.921011, 'color': '#1f1f1f'},  # Near Black
+# }
 
-# Create shaded area for "Not Deep"
-plt.gca().add_patch(patches.Rectangle((not_deep_x_min, not_deep_y_min), 
-                                       not_deep_x_max - not_deep_x_min, 
-                                       not_deep_y_max - not_deep_y_min,
-                                       linewidth=1, edgecolor='none', facecolor='grey', alpha=0.3))
 
-# Create shaded area for "Deep"
-plt.gca().add_patch(patches.Rectangle((deep_x_min, deep_y_min), 
-                                       deep_x_max - deep_x_min, 
-                                       deep_y_max - deep_y_min,
-                                       linewidth=1, edgecolor='none', facecolor='yellow', alpha=0.3))
 
-# Create shaded area for "Missed" (rectangles based on your specifications)
+# # Function to add regions to the plot
+# def add_region(regions):
+#     for label, region in regions.items():
+#         plt.gca().add_patch(patches.Rectangle(
+#             (region['x_min'], region['y_min']),
+#             region['x_max'] - region['x_min'], 
+#             region['y_max'] - region['y_min'],
+#             linewidth=1, edgecolor='none', facecolor=region['color'], alpha=0.5
+#         ))
 
-# Rectangle (0, 5) to (22, 46)
-plt.gca().add_patch(patches.Rectangle((0, 7), 19, 43, 
-                                       linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+# # Add CTL (hot colors) and NCTL (cool colors) regions
+# add_region(regions_ctl)
+# add_region(regions_nctl)
 
-# Rectangle (0, 0) to (80, 5)
-plt.gca().add_patch(patches.Rectangle((0, 0), 80, 7, 
-                                       linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+# # Custom label coordinates for ServeWidth categories
+# label_positions = {
+#     'C': {'x': 50, 'y': 30},
+#     'BC': {'x': 45, 'y': 20},
+#     'B': {'x': 30, 'y': 10},
+#     'BW': {'x': 15, 'y': 20},
+#     'W': {'x': 12, 'y': 30}
+# }
 
-# Rectangle (58, 5) to (80, 46)
-plt.gca().add_patch(patches.Rectangle((61, 7), 22, 43, 
-                                       linewidth=1, edgecolor='none', facecolor='red', alpha=0.3))
+# # Function to add count and percentage labels with a small colored rectangle matching the region
+# def add_labels_for_regions(data_counts, label_positions, region_type, regions):
+#     for index, row in data_counts.iterrows():
+#         serve_width = row['ServeWidth']
+#         count = row['count']
+#         percentage = row['percentage']
+        
+#         # Label format: "NCTL W\ncount shots\n(percentage%)"
+#         label = f"{region_type} {serve_width}\n{count} shots\n({percentage:.2f}%)"
+        
+#         # Get the label position
+#         x = label_positions[serve_width]['x']
+#         y = label_positions[serve_width]['y']
+        
+#         # Calculate center of the respective region for connecting line
+#         region_center_x = (regions[serve_width]['x_min'] + regions[serve_width]['x_max']) / 2
+#         region_center_y = (regions[serve_width]['y_min'] + regions[serve_width]['y_max']) / 2
 
-# Add text to display the percentage and total counts
-plt.text((not_deep_x_min + not_deep_x_max) / 2, (not_deep_y_min + not_deep_y_max) / 2, 
-         f'Not Deep\n{nd_percentage:.1f}% ({nd_count})', color='white', fontsize=12,
-         ha='center', va='center', bbox=dict(facecolor='blue', alpha=0.5))
+#         # Draw a line connecting the label to the region
+#         plt.plot([x, region_center_x], [y, region_center_y], color='white', lw=1)
 
-plt.text((deep_x_min + deep_x_max) / 2, (deep_y_min + deep_y_max) / 2, 
-         f'Deep\n{d_percentage:.1f}% ({d_count})', color='black', fontsize=12,
-         ha='center', va='center', bbox=dict(facecolor='yellow', alpha=0.5))
+#         # Add a colored rectangle behind the label, matching the region color
+#         label_box = patches.FancyBboxPatch((x-6, y-3.5), 15, 8, boxstyle="round,pad=0.3", 
+#                                            edgecolor='none', facecolor=regions[serve_width]['color'], alpha=0.6)
+#         plt.gca().add_patch(label_box)
+        
+#         # Add label text
+#         plt.text(x, y, label, fontsize=10, ha='center', va='center', color='white')
 
-plt.text((court_x_min + 5), 
-         (court_y_max - 90), 
-         f'Missed or 0\n{m_percentage:.1f}% ({m_count})', color='white', fontsize=9,
-         ha='left', va='top', bbox=dict(facecolor='red', alpha=0.5))
+# # Add labels for CTL (ServeWidth categories)
+# add_labels_for_regions(ctl_counts, label_positions, 'CTL', regions_ctl)
 
-# Set axis labels and title
-plt.xlabel('Court X (width)')
-plt.ylabel('Court Y (length)')
-plt.title('Return Depth and Missed Distribution in Men Singles on Wimbledon 2019-2023')
+# # Adjust label positions for NCTL (shift them down or choose new positions)
+# label_positions_nctl = {
+#     'C': {'x': 50, 'y': 50},
+#     'BC': {'x': 45, 'y': 60},
+#     'B': {'x': 30, 'y': 70},
+#     'BW': {'x': 15, 'y': 60},
+#     'W': {'x': 12, 'y': 50}
+# }
 
-# Hide axis ticks
-plt.xticks([])
-plt.yticks([])
+# # Add labels for NCTL (ServeWidth categories)
+# add_labels_for_regions(nctl_counts, label_positions_nctl, 'NCTL', regions_nctl)
 
-# Show the plot
-plt.show()
+# # Set axis labels and title
+# plt.xlabel('Court X (width)')
+# plt.ylabel('Court Y (length)')
+# plt.title('Serve Depth (CTL/NCTL) and Serve Width (C, BC, B, BW, W) Distribution with Counts and Percentages')
+
+# # Hide axis ticks
+# plt.xticks([])
+# plt.yticks([])
+
+# # Show the plot
+# plt.show()
+
+
 
 
 # In[31]:
 
 
-import pandas as pd
+# import pandas as pd
 
-# Define all possible combinations of ServeDepth and ServeWidth
-serve_depths = ['CTL', 'NCTL','0']
-serve_widths = ['W', 'BW', 'B', 'BC', 'C','0']
+# # Define all possible combinations of ServeDepth and ServeWidth
+# serve_depths = ['CTL', 'NCTL','0']
+# serve_widths = ['W', 'BW', 'B', 'BC', 'C','0']
 
-# Create a DataFrame with all combinations
-all_combinations = pd.MultiIndex.from_product([serve_depths, serve_widths], names=['ServeDepth', 'ServeWidth'])
-all_counts = pd.DataFrame(index=all_combinations).reset_index()
+# # Create a DataFrame with all combinations
+# all_combinations = pd.MultiIndex.from_product([serve_depths, serve_widths], names=['ServeDepth', 'ServeWidth'])
+# all_counts = pd.DataFrame(index=all_combinations).reset_index()
 
-# Count the occurrences of each combination
-counts = us.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
-total_shots = us.shape[0]
+# # Count the occurrences of each combination
+# counts = wim.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
 
-# Merge the counts with all combinations to fill in missing combinations with zero counts
-all_counts = all_counts.merge(counts, on=['ServeDepth', 'ServeWidth'], how='left').fillna(0)
+# # Merge the counts with all combinations to fill in missing combinations with zero counts
+# all_counts = all_counts.merge(counts, on=['ServeDepth', 'ServeWidth'], how='left').fillna(0)
 
-# Calculate percentages
-all_counts['percentage'] = (all_counts['count'] / total_shots) * 100
+# # Calculate percentages
+# all_counts['percentage'] = (all_counts['count'] / total_shots) * 100
 
-# Display the counts and percentages
-print(all_counts)
-
+# # Display the counts and percentages
+# print(all_counts)
 
 
 # In[32]:
 
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import matplotlib.image as mpimg
+# import pandas as pd
 
-# Load your image
-court_img = mpimg.imread('usopencourt.jpg')
-
-# Total shots in the dataset
-total_shots = us.shape[0]
-
-# Calculate the counts for ServeDepth and ServeWidth categories
-serve_depth_width_counts = us.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
-
-# ServeDepth and ServeWidth categories counts
-ctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'CTL']
-nctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'NCTL']
-
-# Calculate percentages for CTL and NCTL
-ctl_counts['percentage'] = (ctl_counts['count'] / total_shots) * 100
-nctl_counts['percentage'] = (nctl_counts['count'] / total_shots) * 100
-
-# Display the tennis court image
-plt.figure(figsize=(16, 8))
-plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
-
-# Define the coordinates for ServeDepth and ServeWidth regions
-# Adjust these coordinates based on your image size
-
-# "CTL" (Close to the Line) ServeWidth categories (black to white)
-regions_ctl = {
-    'B': {'x_min': 27, 'x_max': 31, 'y_min': 25, 'y_max': 38, 'count': 1577.0, 'percentage': 1.294735, 'color': '#000000'},  # Black (fewest)
-    'BC': {'x_min': 31, 'x_max': 35, 'y_min': 25, 'y_max': 38, 'count': 3705.0, 'percentage': 3.041847, 'color': '#404040'},  # Dark Gray
-    'C': {'x_min': 35, 'x_max': 39.5, 'y_min': 25, 'y_max': 38, 'count': 6610.0, 'percentage': 5.426885, 'color': '#808080'},  # Medium Gray
-    'BW': {'x_min': 23, 'x_max': 27, 'y_min': 25, 'y_max': 38, 'count': 2800.0, 'percentage': 2.298832, 'color': '#b3b3b3'},  # Light Gray
-    'W': {'x_min': 19, 'x_max': 23, 'y_min': 25, 'y_max': 38, 'count': 18680.0, 'percentage': 15.336491, 'color': '#ffffff'},  # White (most)
-}
-
-# "NCTL" (Not Close to the Line) ServeWidth categories (black to white)
-regions_nctl = {
-    'W': {'x_min': 19, 'x_max': 23, 'y_min': 38, 'y_max': 50, 'count': 7175.0, 'percentage': 5.890756, 'color': '#d9d9d9'},  # Light Gray
-    'B': {'x_min': 27, 'x_max': 31, 'y_min': 38, 'y_max': 50, 'count': 9987.0, 'percentage': 8.199440, 'color': '#808080'},  # Dark Gray
-    'BW': {'x_min': 23, 'x_max': 27, 'y_min': 38, 'y_max': 50, 'count': 19675.0, 'percentage': 16.153398, 'color': '#4d4d4d'},  # Darker Gray
-    'BC': {'x_min': 31, 'x_max': 35, 'y_min': 38, 'y_max': 50, 'count': 16245.0, 'percentage': 13.337329, 'color': '#b3b3b3'},  # Medium Gray
-    'C': {'x_min': 35, 'x_max': 39.5, 'y_min': 38, 'y_max': 50, 'count': 25482.0, 'percentage': 20.921011, 'color': '#1f1f1f'},  # Near Black
-}
-
-
-
-# Function to add regions to the plot
-def add_region(regions):
-    for label, region in regions.items():
-        plt.gca().add_patch(patches.Rectangle(
-            (region['x_min'], region['y_min']),
-            region['x_max'] - region['x_min'], 
-            region['y_max'] - region['y_min'],
-            linewidth=1, edgecolor='none', facecolor=region['color'], alpha=0.5
-        ))
-
-# Add CTL (hot colors) and NCTL (cool colors) regions
-add_region(regions_ctl)
-add_region(regions_nctl)
-
-# Custom label coordinates for ServeWidth categories
-label_positions = {
-    'C': {'x': 50, 'y': 30},
-    'BC': {'x': 45, 'y': 20},
-    'B': {'x': 30, 'y': 10},
-    'BW': {'x': 15, 'y': 20},
-    'W': {'x': 12, 'y': 30}
-}
-
-# Function to add count and percentage labels with a small colored rectangle matching the region
-def add_labels_for_regions(data_counts, label_positions, region_type, regions):
-    for index, row in data_counts.iterrows():
-        serve_width = row['ServeWidth']
-        count = row['count']
-        percentage = row['percentage']
-        
-        # Label format: "NCTL W\ncount shots\n(percentage%)"
-        label = f"{region_type} {serve_width}\n{count} shots\n({percentage:.2f}%)"
-        
-        # Get the label position
-        x = label_positions[serve_width]['x']
-        y = label_positions[serve_width]['y']
-        
-        # Calculate center of the respective region for connecting line
-        region_center_x = (regions[serve_width]['x_min'] + regions[serve_width]['x_max']) / 2
-        region_center_y = (regions[serve_width]['y_min'] + regions[serve_width]['y_max']) / 2
-
-        # Draw a line connecting the label to the region
-        plt.plot([x, region_center_x], [y, region_center_y], color='white', lw=1)
-
-        # Add a colored rectangle behind the label, matching the region color
-        label_box = patches.FancyBboxPatch((x-6, y-3.5), 15, 8, boxstyle="round,pad=0.3", 
-                                           edgecolor='none', facecolor=regions[serve_width]['color'], alpha=0.6)
-        plt.gca().add_patch(label_box)
-        
-        # Add label text
-        plt.text(x, y, label, fontsize=10, ha='center', va='center', color='white')
-
-# Add labels for CTL (ServeWidth categories)
-add_labels_for_regions(ctl_counts, label_positions, 'CTL', regions_ctl)
-
-# Adjust label positions for NCTL (shift them down or choose new positions)
-label_positions_nctl = {
-    'C': {'x': 50, 'y': 50},
-    'BC': {'x': 45, 'y': 60},
-    'B': {'x': 30, 'y': 70},
-    'BW': {'x': 15, 'y': 60},
-    'W': {'x': 12, 'y': 50}
-}
-
-# Add labels for NCTL (ServeWidth categories)
-add_labels_for_regions(nctl_counts, label_positions_nctl, 'NCTL', regions_nctl)
-
-# Set axis labels and title
-plt.xlabel('Court X (width)')
-plt.ylabel('Court Y (length)')
-plt.title('Serve Depth (CTL/NCTL) and Serve Width (C, BC, B, BW, W) Distribution with Counts and Percentages')
-
-# Hide axis ticks
-plt.xticks([])
-plt.yticks([])
-
-# Show the plot
-plt.show()
-
-
+# # Assuming us and wim are pandas DataFrames
+wimus = pd.concat([us, wim], ignore_index=True)
+# every = pd.concat([us, wim, rg, ao], ignore_index=True)
+# every
 
 
 # In[33]:
 
 
-import pandas as pd
+# # Standardize names based on the full version of the name
+# def standardize_names(series):
+#     # Create a dictionary to hold standardized names
+#     standardized = {}
+    
+#     for name in series:
+#         # Split into first name and last name
+#         parts = name.split()
+#         if len(parts) < 2:
+#             continue  # Skip invalid names
+        
+#         first_initial, last_name = parts[0][0], parts[1]
+#         full_key = f"{first_initial} {last_name}"
+        
+#         # If we encounter the first full name for this pattern, use it as the standard
+#         if full_key not in standardized:
+#             standardized[full_key] = name
+        
+#     # Replace names with the standardized version
+#     return series.apply(lambda x: standardized.get(f"{x.split()[0][0]} {x.split()[1]}", x))
 
-# Define all possible combinations of ServeDepth and ServeWidth
-serve_depths = ['CTL', 'NCTL','0']
-serve_widths = ['W', 'BW', 'B', 'BC', 'C','0']
+# # Apply standardization to both player1 and player2 columns in the `every` dataset
+# every['player1'] = standardize_names(every['player1'])
+# every['player2'] = standardize_names(every['player2'])
 
-# Create a DataFrame with all combinations
-all_combinations = pd.MultiIndex.from_product([serve_depths, serve_widths], names=['ServeDepth', 'ServeWidth'])
-all_counts = pd.DataFrame(index=all_combinations).reset_index()
 
-# Count the occurrences of each combination
-counts = wim.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
+# player1_counts = every['player1'].value_counts()
+# player2_counts = every['player2'].value_counts()
 
-# Merge the counts with all combinations to fill in missing combinations with zero counts
-all_counts = all_counts.merge(counts, on=['ServeDepth', 'ServeWidth'], how='left').fillna(0)
+# # Display value counts
+# print("Value counts for player1:")
+# print(player1_counts)
 
-# Calculate percentages
-all_counts['percentage'] = (all_counts['count'] / total_shots) * 100
-
-# Display the counts and percentages
-print(all_counts)
+# print("\nValue counts for player2:")
+# print(player2_counts)
 
 
 # In[34]:
 
 
-import pandas as pd
+# # Extract first and last names from player1 and player2
+# every['first_name_player1'] = every['player1'].apply(lambda x: x.split()[0] if pd.notnull(x) else None)
+# every['last_name_player1'] = every['player1'].apply(lambda x: x.split()[-1] if pd.notnull(x) else None)
+# every['first_name_player2'] = every['player2'].apply(lambda x: x.split()[0] if pd.notnull(x) else None)
+# every['last_name_player2'] = every['player2'].apply(lambda x: x.split()[-1] if pd.notnull(x) else None)
 
-# Assuming us and wim are pandas DataFrames
-wimus = pd.concat([us, wim], ignore_index=True)
-every = pd.concat([us, wim, rg, ao], ignore_index=True)
-every
+# # Combine first and last names from both columns
+# all_names = pd.DataFrame({
+#     'first_name': pd.concat([every['first_name_player1'], every['first_name_player2']]),
+#     'last_name': pd.concat([every['last_name_player1'], every['last_name_player2']])
+# }).dropna()
+
+# # Group by last name and find last names with multiple first names
+# last_name_groups = all_names.groupby('last_name')['first_name'].apply(list)
+# duplicate_last_names = last_name_groups[last_name_groups.apply(lambda x: len(set(x)) > 1)]
+
+# # Display full names for duplicate last names
+# print("Full names with the same last name but different first names:")
+# for last_name, first_names in duplicate_last_names.items():
+#     unique_first_names = set(first_names)  # Get unique first names
+#     print(f"Last Name: {last_name}")
+#     for first_name in unique_first_names:
+#         print(f"  {first_name} {last_name}")
+
 
 
 # In[35]:
 
 
-# Standardize names based on the full version of the name
-def standardize_names(series):
-    # Create a dictionary to hold standardized names
-    standardized = {}
-    
-    for name in series:
-        # Split into first name and last name
-        parts = name.split()
-        if len(parts) < 2:
-            continue  # Skip invalid names
+# # Load your image
+# court_img = mpimg.imread('wimbledon_grass_court.jpg')
+
+# # Total shots in the dataset
+# total_shots = wimus.shape[0]
+
+# # Calculate the counts for ServeDepth and ServeWidth categories
+# serve_depth_width_counts = wimus.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
+
+# # ServeDepth and ServeWidth categories counts
+# ctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'CTL']
+# nctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'NCTL']
+
+# # Calculate percentages for CTL and NCTL
+# ctl_counts['percentage'] = (ctl_counts['count'] / total_shots) * 100
+# nctl_counts['percentage'] = (nctl_counts['count'] / total_shots) * 100
+
+# # Display the tennis court image
+# plt.figure(figsize=(16, 8))
+# plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
+
+# # Define the coordinates for ServeDepth and ServeWidth regions
+# # Adjust these coordinates based on your image size
+
+# # "CTL" (Close to the Line) ServeWidth categories (hot colors)
+# regions_ctl = {
+#     'W': {'x_min': 22, 'x_max': 26, 'y_min': 26, 'y_max': 36, 'count': 18385.0, 'percentage': 15.094293, 'color': '#d7d7d7'},  # Light gray
+#     'BW': {'x_min': 26, 'x_max': 29, 'y_min': 26, 'y_max': 36, 'count': 2595.0, 'percentage': 2.130524, 'color': '#1f1f1f'},  # Dark gray
+#     'B': {'x_min': 29, 'x_max': 33, 'y_min': 26, 'y_max': 36, 'count': 1854.0, 'percentage': 1.522155, 'color': '#141414'},  # Near black
+#     'BC': {'x_min': 33, 'x_max': 36, 'y_min': 26, 'y_max': 36, 'count': 3555.0, 'percentage': 2.918695, 'color': '#2d2d2d'},  # Dark gray
+#     'C': {'x_min': 36, 'x_max': 40, 'y_min': 26, 'y_max': 36, 'count': 6588.0, 'percentage': 5.408823, 'color': '#484848'},  # Medium gray
+# }
+
+# regions_nctl = {
+#     'W': {'x_min': 22, 'x_max': 26, 'y_min': 36, 'y_max': 46, 'count': 6704.0, 'percentage': 5.504060, 'color': '#4d4d4d'},  # Medium gray
+#     'BW': {'x_min': 26, 'x_max': 29, 'y_min': 36, 'y_max': 46, 'count': 16282.0, 'percentage': 13.367706, 'color': '#a7a7a7'},  # Light gray
+#     'B': {'x_min': 29, 'x_max': 33, 'y_min': 36, 'y_max': 46, 'count': 9107.0, 'percentage': 7.476950, 'color': '#636363'},  # Medium gray
+#     'BC': {'x_min': 33, 'x_max': 36, 'y_min': 36, 'y_max': 46, 'count': 13623.0, 'percentage': 11.184637, 'color': '#888888'},  # Light gray
+#     'C': {'x_min': 36, 'x_max': 40, 'y_min': 36, 'y_max': 46, 'count': 23153.0, 'percentage': 19.008875, 'color': '#ffffff'},  # White
+# }
+
+
+
+# # Function to add regions to the plot
+# def add_region(regions):
+#     for label, region in regions.items():
+#         plt.gca().add_patch(patches.Rectangle(
+#             (region['x_min'], region['y_min']),
+#             region['x_max'] - region['x_min'], 
+#             region['y_max'] - region['y_min'],
+#             linewidth=1, edgecolor='none', facecolor=region['color'], alpha=0.5
+#         ))
+
+# # Add CTL (hot colors) and NCTL (cool colors) regions
+# add_region(regions_ctl)
+# add_region(regions_nctl)
+
+# # Custom label coordinates for ServeWidth categories
+# label_positions = {
+#     'C': {'x': 50, 'y': 30},
+#     'BC': {'x': 45, 'y': 20},
+#     'B': {'x': 30, 'y': 10},
+#     'BW': {'x': 15, 'y': 20},
+#     'W': {'x': 8, 'y': 30}
+# }
+
+# # Function to add count and percentage labels with a small colored rectangle matching the region
+# def add_labels_for_regions(data_counts, label_positions, region_type, regions):
+#     for index, row in data_counts.iterrows():
+#         serve_width = row['ServeWidth']
+#         count = row['count']
+#         percentage = row['percentage']
         
-        first_initial, last_name = parts[0][0], parts[1]
-        full_key = f"{first_initial} {last_name}"
+        # Label format: "NCTL W\ncount shots\n(percentage%)"
+#         label = f"{region_type} {serve_width}\n{count} shots\n({percentage:.2f}%)"
         
-        # If we encounter the first full name for this pattern, use it as the standard
-        if full_key not in standardized:
-            standardized[full_key] = name
+#         # Get the label position
+#         x = label_positions[serve_width]['x']
+#         y = label_positions[serve_width]['y']
         
-    # Replace names with the standardized version
-    return series.apply(lambda x: standardized.get(f"{x.split()[0][0]} {x.split()[1]}", x))
+#         # Calculate center of the respective region for connecting line
+#         region_center_x = (regions[serve_width]['x_min'] + regions[serve_width]['x_max']) / 2
+#         region_center_y = (regions[serve_width]['y_min'] + regions[serve_width]['y_max']) / 2
 
-# Apply standardization to both player1 and player2 columns in the `every` dataset
-every['player1'] = standardize_names(every['player1'])
-every['player2'] = standardize_names(every['player2'])
+#         # Draw a line connecting the label to the region
+#         plt.plot([x, region_center_x], [y, region_center_y], color='white', lw=1)
 
+#         # Add a colored rectangle behind the label, matching the region color
+#         label_box = patches.FancyBboxPatch((x-6, y-3.5), 15, 8, boxstyle="round,pad=0.3", 
+#                                            edgecolor='none', facecolor=regions[serve_width]['color'], alpha=0.6)
+#         plt.gca().add_patch(label_box)
+        
+#         # Add label text
+#         plt.text(x, y, label, fontsize=10, ha='center', va='center', color='white')
 
-player1_counts = every['player1'].value_counts()
-player2_counts = every['player2'].value_counts()
+# # Add labels for CTL (ServeWidth categories)
+# add_labels_for_regions(ctl_counts, label_positions, 'CTL', regions_ctl)
 
-# Display value counts
-print("Value counts for player1:")
-print(player1_counts)
+# # Adjust label positions for NCTL (shift them down or choose new positions)
+# label_positions_nctl = {
+#     'C': {'x': 50, 'y': 50},
+#     'BC': {'x': 45, 'y': 60},
+#     'B': {'x': 30, 'y': 70},
+#     'BW': {'x': 15, 'y': 60},
+#     'W': {'x': 8, 'y': 50}
+# }
 
-print("\nValue counts for player2:")
-print(player2_counts)
+# # Add labels for NCTL (ServeWidth categories)
+# add_labels_for_regions(nctl_counts, label_positions_nctl, 'NCTL', regions_nctl)
+
+# # Set axis labels and title
+# plt.xlabel('Court X (width)')
+# plt.ylabel('Court Y (length)')
+# plt.title('Serve Depth (CTL/NCTL) and Serve Width (C, BC, B, BW, W) Distribution with Counts and Percentages')
+
+# # Hide axis ticks
+# plt.xticks([])
+# plt.yticks([])
+
+# # Show the plot
+# plt.show()
 
 
 # In[36]:
 
 
-# Extract first and last names from player1 and player2
-every['first_name_player1'] = every['player1'].apply(lambda x: x.split()[0] if pd.notnull(x) else None)
-every['last_name_player1'] = every['player1'].apply(lambda x: x.split()[-1] if pd.notnull(x) else None)
-every['first_name_player2'] = every['player2'].apply(lambda x: x.split()[0] if pd.notnull(x) else None)
-every['last_name_player2'] = every['player2'].apply(lambda x: x.split()[-1] if pd.notnull(x) else None)
-
-# Combine first and last names from both columns
-all_names = pd.DataFrame({
-    'first_name': pd.concat([every['first_name_player1'], every['first_name_player2']]),
-    'last_name': pd.concat([every['last_name_player1'], every['last_name_player2']])
-}).dropna()
-
-# Group by last name and find last names with multiple first names
-last_name_groups = all_names.groupby('last_name')['first_name'].apply(list)
-duplicate_last_names = last_name_groups[last_name_groups.apply(lambda x: len(set(x)) > 1)]
-
-# Display full names for duplicate last names
-print("Full names with the same last name but different first names:")
-for last_name, first_names in duplicate_last_names.items():
-    unique_first_names = set(first_names)  # Get unique first names
-    print(f"Last Name: {last_name}")
-    for first_name in unique_first_names:
-        print(f"  {first_name} {last_name}")
+# us['Server_win_point'] = us.apply(lambda row: 1 if row['PointServer'] == row['PointWinner'] else 0, axis=1)
+# wim['Server_win_point'] = wim.apply(lambda row: 1 if row['PointServer'] == row['PointWinner'] else 0, axis=1)
+# us['Returned'] = us.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] or row['RallyCount'] >= 2) else 0, axis=1)
+# wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] or row['RallyCount'] >= 2) else 0, axis=1)
 
 
 
 # In[37]:
-
-
-# Load your image
-court_img = mpimg.imread('wimbledon_grass_court.jpg')
-
-# Total shots in the dataset
-total_shots = wimus.shape[0]
-
-# Calculate the counts for ServeDepth and ServeWidth categories
-serve_depth_width_counts = wimus.groupby(['ServeDepth', 'ServeWidth']).size().reset_index(name='count')
-
-# ServeDepth and ServeWidth categories counts
-ctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'CTL']
-nctl_counts = serve_depth_width_counts[serve_depth_width_counts['ServeDepth'] == 'NCTL']
-
-# Calculate percentages for CTL and NCTL
-ctl_counts['percentage'] = (ctl_counts['count'] / total_shots) * 100
-nctl_counts['percentage'] = (nctl_counts['count'] / total_shots) * 100
-
-# Display the tennis court image
-plt.figure(figsize=(16, 8))
-plt.imshow(court_img, extent=[court_x_min, court_x_max, court_y_min, court_y_max])
-
-# Define the coordinates for ServeDepth and ServeWidth regions
-# Adjust these coordinates based on your image size
-
-# "CTL" (Close to the Line) ServeWidth categories (hot colors)
-regions_ctl = {
-    'W': {'x_min': 22, 'x_max': 26, 'y_min': 26, 'y_max': 36, 'count': 18385.0, 'percentage': 15.094293, 'color': '#d7d7d7'},  # Light gray
-    'BW': {'x_min': 26, 'x_max': 29, 'y_min': 26, 'y_max': 36, 'count': 2595.0, 'percentage': 2.130524, 'color': '#1f1f1f'},  # Dark gray
-    'B': {'x_min': 29, 'x_max': 33, 'y_min': 26, 'y_max': 36, 'count': 1854.0, 'percentage': 1.522155, 'color': '#141414'},  # Near black
-    'BC': {'x_min': 33, 'x_max': 36, 'y_min': 26, 'y_max': 36, 'count': 3555.0, 'percentage': 2.918695, 'color': '#2d2d2d'},  # Dark gray
-    'C': {'x_min': 36, 'x_max': 40, 'y_min': 26, 'y_max': 36, 'count': 6588.0, 'percentage': 5.408823, 'color': '#484848'},  # Medium gray
-}
-
-regions_nctl = {
-    'W': {'x_min': 22, 'x_max': 26, 'y_min': 36, 'y_max': 46, 'count': 6704.0, 'percentage': 5.504060, 'color': '#4d4d4d'},  # Medium gray
-    'BW': {'x_min': 26, 'x_max': 29, 'y_min': 36, 'y_max': 46, 'count': 16282.0, 'percentage': 13.367706, 'color': '#a7a7a7'},  # Light gray
-    'B': {'x_min': 29, 'x_max': 33, 'y_min': 36, 'y_max': 46, 'count': 9107.0, 'percentage': 7.476950, 'color': '#636363'},  # Medium gray
-    'BC': {'x_min': 33, 'x_max': 36, 'y_min': 36, 'y_max': 46, 'count': 13623.0, 'percentage': 11.184637, 'color': '#888888'},  # Light gray
-    'C': {'x_min': 36, 'x_max': 40, 'y_min': 36, 'y_max': 46, 'count': 23153.0, 'percentage': 19.008875, 'color': '#ffffff'},  # White
-}
-
-
-
-# Function to add regions to the plot
-def add_region(regions):
-    for label, region in regions.items():
-        plt.gca().add_patch(patches.Rectangle(
-            (region['x_min'], region['y_min']),
-            region['x_max'] - region['x_min'], 
-            region['y_max'] - region['y_min'],
-            linewidth=1, edgecolor='none', facecolor=region['color'], alpha=0.5
-        ))
-
-# Add CTL (hot colors) and NCTL (cool colors) regions
-add_region(regions_ctl)
-add_region(regions_nctl)
-
-# Custom label coordinates for ServeWidth categories
-label_positions = {
-    'C': {'x': 50, 'y': 30},
-    'BC': {'x': 45, 'y': 20},
-    'B': {'x': 30, 'y': 10},
-    'BW': {'x': 15, 'y': 20},
-    'W': {'x': 8, 'y': 30}
-}
-
-# Function to add count and percentage labels with a small colored rectangle matching the region
-def add_labels_for_regions(data_counts, label_positions, region_type, regions):
-    for index, row in data_counts.iterrows():
-        serve_width = row['ServeWidth']
-        count = row['count']
-        percentage = row['percentage']
-        
-        # Label format: "NCTL W\ncount shots\n(percentage%)"
-        label = f"{region_type} {serve_width}\n{count} shots\n({percentage:.2f}%)"
-        
-        # Get the label position
-        x = label_positions[serve_width]['x']
-        y = label_positions[serve_width]['y']
-        
-        # Calculate center of the respective region for connecting line
-        region_center_x = (regions[serve_width]['x_min'] + regions[serve_width]['x_max']) / 2
-        region_center_y = (regions[serve_width]['y_min'] + regions[serve_width]['y_max']) / 2
-
-        # Draw a line connecting the label to the region
-        plt.plot([x, region_center_x], [y, region_center_y], color='white', lw=1)
-
-        # Add a colored rectangle behind the label, matching the region color
-        label_box = patches.FancyBboxPatch((x-6, y-3.5), 15, 8, boxstyle="round,pad=0.3", 
-                                           edgecolor='none', facecolor=regions[serve_width]['color'], alpha=0.6)
-        plt.gca().add_patch(label_box)
-        
-        # Add label text
-        plt.text(x, y, label, fontsize=10, ha='center', va='center', color='white')
-
-# Add labels for CTL (ServeWidth categories)
-add_labels_for_regions(ctl_counts, label_positions, 'CTL', regions_ctl)
-
-# Adjust label positions for NCTL (shift them down or choose new positions)
-label_positions_nctl = {
-    'C': {'x': 50, 'y': 50},
-    'BC': {'x': 45, 'y': 60},
-    'B': {'x': 30, 'y': 70},
-    'BW': {'x': 15, 'y': 60},
-    'W': {'x': 8, 'y': 50}
-}
-
-# Add labels for NCTL (ServeWidth categories)
-add_labels_for_regions(nctl_counts, label_positions_nctl, 'NCTL', regions_nctl)
-
-# Set axis labels and title
-plt.xlabel('Court X (width)')
-plt.ylabel('Court Y (length)')
-plt.title('Serve Depth (CTL/NCTL) and Serve Width (C, BC, B, BW, W) Distribution with Counts and Percentages')
-
-# Hide axis ticks
-plt.xticks([])
-plt.yticks([])
-
-# Show the plot
-plt.show()
-
-
-# In[38]:
-
-
-us['Server_win_point'] = us.apply(lambda row: 1 if row['PointServer'] == row['PointWinner'] else 0, axis=1)
-wim['Server_win_point'] = wim.apply(lambda row: 1 if row['PointServer'] == row['PointWinner'] else 0, axis=1)
-us['Returned'] = us.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] or row['RallyCount'] >= 2) else 0, axis=1)
-wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] or row['RallyCount'] >= 2) else 0, axis=1)
-
-
-
-# In[39]:
 
 
 # ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO BE RETURNED IN US OPEN
@@ -1244,7 +1215,7 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 # print(result.summary())
 
 
-# In[40]:
+# In[38]:
 
 
 # ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO BE RETURNED IN WIMBLEDON
@@ -1277,7 +1248,7 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 # print(result.summary())
 
 
-# In[41]:
+# In[39]:
 
 
 # ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO WIN A POINT IN US OPEN
@@ -1307,7 +1278,7 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 # print(result.summary())
 
 
-# In[42]:
+# In[40]:
 
 
 # ##LOGISTIC REGRESSION, THE SIGNIFICANCE OF SERVE DIRECTION TO WIN A POINT IN WIMBLEDON
@@ -1329,6 +1300,59 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 
 # # Add a constant to the independent variables
 # X = sm.add_constant(X)
+
+# # Fit the logistic regression model
+# model = sm.Logit(y, X)
+# result = model.fit()
+
+# # Output the summary of the model
+# print(result.summary())
+
+
+# In[41]:
+
+
+# import pandas as pd
+# import statsmodels.api as sm
+
+# # One-hot encode ServeNumber
+# serve_number_dummies = pd.get_dummies(us['ServeNumber'], drop_first=True)
+
+# # Prepare the independent variables (ServeNumber and Speed_KMH)
+# X = pd.concat([serve_number_dummies, us[['Speed_KMH']]], axis=1)
+
+# # Add a constant to the independent variables
+# X = sm.add_constant(X)
+
+# # Define the dependent variable
+# y = us['Server_win_point']
+
+# # Fit the logistic regression model
+# model = sm.Logit(y, X)
+# result = model.fit()
+
+# # Output the summary of the model
+# print(result.summary())
+
+
+
+# In[42]:
+
+
+# import pandas as pd
+# import statsmodels.api as sm
+
+# # One-hot encode ServeNumber
+# serve_number_dummies = pd.get_dummies(wim['ServeNumber'], drop_first=True)
+
+# # Prepare the independent variables (ServeNumber and Speed_KMH)
+# X = pd.concat([serve_number_dummies, wim[['Speed_KMH']]], axis=1)
+
+# # Add a constant to the independent variables
+# X = sm.add_constant(X)
+
+# # Define the dependent variable
+# y = wim['Returned']
 
 # # Fit the logistic regression model
 # model = sm.Logit(y, X)
@@ -1364,60 +1388,7 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 # print(result.summary())
 
 
-
 # In[44]:
-
-
-# import pandas as pd
-# import statsmodels.api as sm
-
-# # One-hot encode ServeNumber
-# serve_number_dummies = pd.get_dummies(wim['ServeNumber'], drop_first=True)
-
-# # Prepare the independent variables (ServeNumber and Speed_KMH)
-# X = pd.concat([serve_number_dummies, wim[['Speed_KMH']]], axis=1)
-
-# # Add a constant to the independent variables
-# X = sm.add_constant(X)
-
-# # Define the dependent variable
-# y = wim['Returned']
-
-# # Fit the logistic regression model
-# model = sm.Logit(y, X)
-# result = model.fit()
-
-# # Output the summary of the model
-# print(result.summary())
-
-
-# In[45]:
-
-
-# import pandas as pd
-# import statsmodels.api as sm
-
-# # One-hot encode ServeNumber
-# serve_number_dummies = pd.get_dummies(us['ServeNumber'], drop_first=True)
-
-# # Prepare the independent variables (ServeNumber and Speed_KMH)
-# X = pd.concat([serve_number_dummies, us[['Speed_KMH']]], axis=1)
-
-# # Add a constant to the independent variables
-# X = sm.add_constant(X)
-
-# # Define the dependent variable
-# y = us['Server_win_point']
-
-# # Fit the logistic regression model
-# model = sm.Logit(y, X)
-# result = model.fit()
-
-# # Output the summary of the model
-# print(result.summary())
-
-
-# In[46]:
 
 
 # import pandas as pd
@@ -1437,7 +1408,7 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 # print(result.summary())
 
 
-# In[47]:
+# In[45]:
 
 
 # import pandas as pd
@@ -1459,7 +1430,7 @@ wim['Returned'] = wim.apply(lambda row: 1 if (row['ReturnDepth'] in ['ND', 'D'] 
 
 # 
 
-# In[48]:
+# In[46]:
 
 
 import pandas as pd
@@ -1468,21 +1439,21 @@ import pandas as pd
 gs = pd.concat([gs19, gs20, gs21, gs22, gs23], ignore_index=True)
 
 
-# In[49]:
+# In[47]:
 
 
 gs = gs[gs['tourney_level'] == "G"]
 gs
 
 
-# In[50]:
+# In[48]:
 
 
 # Create the DoubleFault column with categorical values
 wimus['DoubleFault'] = pd.Categorical(((wimus['P1DoubleFault'] == 1) | (wimus['P2DoubleFault'] == 1)).astype(int))
 
 
-# In[51]:
+# In[49]:
 
 
 # import pandas as pd
@@ -1533,7 +1504,7 @@ wimus['DoubleFault'] = pd.Categorical(((wimus['P1DoubleFault'] == 1) | (wimus['P
 # #loess regression
 
 
-# In[52]:
+# In[50]:
 
 
 import pandas as pd
@@ -1559,7 +1530,7 @@ grouped_data = wimus_long.groupby('player_name').agg(
 
 
 
-# In[53]:
+# In[51]:
 
 
 import pandas as pd
@@ -1655,7 +1626,7 @@ player_stats = pd.merge(player_stats, matches_played, how='left', on='player_nam
 player_stats
 
 
-# In[54]:
+# In[52]:
 
 
 # Ensure matches_as_winner is a Series with player_name as index
@@ -1667,11 +1638,8 @@ player_stats = pd.merge(player_stats, matches_as_winner, how='left', on='player_
 # Calculate Match_Win_Percentage
 player_stats['Match_Win_Percentage'] = (player_stats['matches_as_winner'] / player_stats['match_played']) * 100
 
-# Display the resulting dataframe
-player_stats
 
-
-# In[55]:
+# In[53]:
 
 
 # Now map the heights as before
@@ -1682,7 +1650,7 @@ loser_ht_map = dict(zip(gs['loser_name'], gs['loser_ht']))
 player_stats['height'] = player_stats['player_name'].map(winner_ht_map).fillna(player_stats['player_name'].map(loser_ht_map))
 
 
-# In[56]:
+# In[54]:
 
 
 # Create a dictionary to map player_name to their height (both winners and losers)
@@ -1694,7 +1662,7 @@ player_stats['height'] = player_stats['player_name'].map(winner_ht_map).fillna(p
 
 
 
-# In[57]:
+# In[55]:
 
 
 import pandas as pd
@@ -1711,7 +1679,7 @@ player_stats = player_stats[na_counts <= 5]
 
 
 
-# In[58]:
+# In[56]:
 
 
 import pandas as pd
@@ -1756,7 +1724,7 @@ merged_stats = merge_and_aggregate(gs, player_stats)
 merged_stats
 
 
-# In[59]:
+# In[57]:
 
 
 # Filter for matches where Adrian Mannarino appears as a winner or loser
@@ -1772,7 +1740,7 @@ mannarino_1stIn = (
 print(f"Total 1stIn for Adrian Mannarino: {mannarino_1stIn}")
 
 
-# In[60]:
+# In[58]:
 
 
 # Count appearances as a winner
@@ -1788,7 +1756,7 @@ print(f"Adrian Mannarino appeared in {mannarino_total_appearances} matches.")
 print(f"As winner: {mannarino_as_winner}, As loser: {mannarino_as_loser}")
 
 
-# In[61]:
+# In[59]:
 
 
 import pandas as pd
@@ -1836,7 +1804,7 @@ player_stats = classify_rank_elite(gs, player_stats)
 
 
 
-# In[62]:
+# In[60]:
 
 
 # Filter the players where rank_elite is 'E'
@@ -1846,7 +1814,7 @@ elite_players = player_stats[player_stats['rank_elite'] == 'E']['player_name'].t
 print(elite_players)
 
 
-# In[63]:
+# In[61]:
 
 
 import pandas as pd
@@ -1893,7 +1861,7 @@ plot_avg_1st_serve_by_rank_elite(player_stats)
 
 
 
-# In[64]:
+# In[62]:
 
 
 import pandas as pd
@@ -1940,7 +1908,7 @@ plot_avg_1st_serve_by_rank_elite(player_stats)
 
 # This implies that in fact the Elite player has a weaker serve in terms of speed, which suggested that speed is not a significant key component for being a great player. 
 
-# In[65]:
+# In[63]:
 
 
 import pandas as pd
@@ -1975,7 +1943,7 @@ def plot_pie_charts_for_serve_depth_width(player_stats):
 plot_pie_charts_for_serve_depth_width(player_stats)
 
 
-# In[66]:
+# In[64]:
 
 
 import pandas as pd
@@ -2017,7 +1985,7 @@ plot_pie_charts_for_return_depth(player_stats)
 
 # This graph implies that the variations and percentage of service position does not significantly contribute to the differences in performance between elite players and non elite players
 
-# In[67]:
+# In[65]:
 
 
 # Assuming '1stIn', '1stWon', and 'match_played' are existing columns in the player_stats DataFrame
@@ -2030,7 +1998,7 @@ player_stats['1stWon_per_match'] = player_stats['1stWon'] / player_stats['match_
 player_stats[['player_name', '1stIn', '1stWon', 'match_played', '1stIn_per_match', '1stWon_per_match']].head()
 
 
-# In[68]:
+# In[66]:
 
 
 # import matplotlib.pyplot as plt
@@ -2072,7 +2040,7 @@ player_stats[['player_name', '1stIn', '1stWon', 'match_played', '1stIn_per_match
 
 # This implies that the elite players have a considerable average number of 1st serve in and 1st serve won compared to the non-elite players, with about 20 units for each category. Even though by percentage, 20 units is not that significant, however, during professional matches, every point matters, and 20 points are about 5 games of tennis. These 20 points only counts for 1st Serve In and 1st Serve Won, not to mention 2nd Serves, which differentiates between great players and those who are yet to be. 
 
-# In[69]:
+# In[67]:
 
 
 player_stats['2ndWon_per_match'] = player_stats['2ndWon'] / player_stats['match_played']
@@ -2089,7 +2057,7 @@ player_stats[['player_name', '1stIn', '1stWon', 'match_played', '1stIn_per_match
 player_stats = player_stats.dropna(thresh=player_stats.shape[1] - 5)
 
 
-# In[71]:
+# In[68]:
 
 
 import seaborn as sns
@@ -2145,7 +2113,7 @@ plt.show()
 
 # The graphs also imply that the elite players took the edge of number of 2nd Serve Point won per matches compared to the non-elite ones, by average of 6 points. In total for both first and second serve point, the elite players edged by 26 points, which is a significant number in professional tennis. Although they have fewer break point saved than their non-elite counterparts, it may be due to the fact that they faced considerably fewer break points than the non-elite. In terms of break point saved % (saved/faced), elite players again edged the non-elite by 6%, implying that the elites are clutcher. 
 
-# In[72]:
+# In[69]:
 
 
 wimus['0-4'] = wimus['RallyCount'].apply(lambda x: 1 if 0 <= x <= 4 else 0)
@@ -2155,7 +2123,7 @@ wimus['9+'] = wimus['RallyCount'].apply(lambda x: 1 if x >= 9 else 0)
 
 
 
-# In[73]:
+# In[70]:
 
 
 # Create columns for wins and losses by rally categories
@@ -2199,7 +2167,7 @@ result['9+_%'] = result['9+_w']*100 / (result['9+_w'] + result['9+_l'])
 
 
 
-# In[74]:
+# In[71]:
 
 
 # Merge the result DataFrame (containing percentage columns) with player_stats
@@ -2210,7 +2178,7 @@ player_stats = player_stats.merge(result[['player_name', '0-4_%', '5-8_%', '9+_%
 
 
 
-# In[75]:
+# In[72]:
 
 
 # # import pandas as pd
@@ -2238,7 +2206,7 @@ player_stats = player_stats.merge(result[['player_name', '0-4_%', '5-8_%', '9+_%
 # This regression model suggest that an 1cm increase in height may result in a 0.3 km/h increase in average first serve speed. It shows positive correlational relationship between the players' height and their average first serve speed.
 # 
 
-# In[76]:
+# In[73]:
 
 
 import pandas as pd
@@ -2258,7 +2226,7 @@ deficit = last_points_per_match[['match_id', 'player1', 'player2', 'P1PointsWon'
 deficit
 
 
-# In[77]:
+# In[74]:
 
 
 # Step 1: Sum P1Deficit for player1 and P2Deficit for player2, then combine them
@@ -2277,7 +2245,7 @@ total_def = total_def.rename(columns={'index': 'player_name'})
 total_def
 
 
-# In[78]:
+# In[75]:
 
 
 # Step 1: Calculate total deficits by player across both `player1` and `player2`
@@ -2306,7 +2274,7 @@ player_stats
 #
 
 
-# In[79]:
+# In[108]:
 
 
 player_stats['avg_deficit'] = player_stats['total_deficit'] / player_stats['match_played']
@@ -2314,10 +2282,10 @@ player_stats['avg_deficit'] = player_stats['total_deficit'] / player_stats['matc
 player_stats
 
 
-# In[81]:
+# In[109]:
 
 
-# player_stats['elite_numeric'] = player_stats['rank_elite'].map({'E': 1, 'NE': 0})
+player_stats['elite_numeric'] = player_stats['rank_elite'].map({'E': 1, 'NE': 0})
 # player_stats.drop(columns=['rank_elite'], inplace=True)
 
 # # Calculate median of avg_deficit
@@ -2347,13 +2315,13 @@ player_stats
 # ## Regression Model Interpretation
 # The regression suggests that the number of 1st Serve In or 1st Serve Won has limited impact to the change in average deficit of the matches, while the fact a player is an elite or non-elite played a significant impact, as if one is an elite, they may earn more than 10 points compared to non-elite counterparts on average. Regarding the factor 1st Serve In multiplies with 1st Serve Won, it has little to no relationship with average deficit points per match. 
 
-# In[82]:
+# In[110]:
 
 
 gs
 
 
-# In[83]:
+# In[111]:
 
 
 # import seaborn as sns
@@ -2377,7 +2345,7 @@ gs
 # The linear regression suggests that the majority of data points is located below median of both variables, which means most matches are played between players with points below median.There is a wide spread of loser rank points for any given winner rank point, indicating variability in the rank points of losers. Some matches involve losers with very high rank points, which are outliers compared to the general trend.
 # 
 
-# In[84]:
+# In[112]:
 
 
 # Scatterplot with linear regression line
@@ -2400,7 +2368,7 @@ plt.show()
 # P/S:
 # 
 
-# In[85]:
+# In[113]:
 
 
 # Assuming player_stats has already been defined with Forehand_Winners, Backhand_Winners, and match_played
@@ -2410,7 +2378,7 @@ player_stats['avg_Forehand'] = player_stats['Forehand_Winners'] / player_stats['
 player_stats['avg_Backhand'] = player_stats['Backhand_Winners'] / player_stats['match_played']
 
 
-# In[86]:
+# In[114]:
 
 
 # import statsmodels.api as sm
@@ -2432,7 +2400,7 @@ player_stats['avg_Backhand'] = player_stats['Backhand_Winners'] / player_stats['
 
 
 
-# In[87]:
+# In[115]:
 
 
 # import statsmodels.api as sm
@@ -2493,7 +2461,7 @@ player_stats['avg_Backhand'] = player_stats['Backhand_Winners'] / player_stats['
 
 
 
-# In[89]:
+# In[116]:
 
 
 # # Plot the heatmap
@@ -2522,7 +2490,7 @@ player_stats['avg_Backhand'] = player_stats['Backhand_Winners'] / player_stats['
 # 
 # Elite_numeric and ranking points have strong positive correlation (0.77) as the elite players are mostly top players who earn higher ranking points that others.
 
-# In[90]:
+# In[117]:
 
 
 # import matplotlib.pyplot as plt
@@ -2557,13 +2525,13 @@ player_stats['avg_Backhand'] = player_stats['Backhand_Winners'] / player_stats['
 
 # 
 
-# In[91]:
+# In[118]:
 
 
 player_stats
 
 
-# In[92]:
+# In[119]:
 
 
 # Save as Excel
@@ -2572,13 +2540,13 @@ player_stats
 
 # ## Create Dashboard
 
-# In[93]:
+# In[120]:
 
 
 player_stats
 
 
-# In[94]:
+# In[121]:
 
 
 # Calculate averages
@@ -2586,37 +2554,37 @@ player_stats['avg_ace'] = player_stats['ace'] / player_stats['match_played']
 player_stats['avg_df'] = player_stats['df'] / player_stats['match_played']
 
 
-# In[95]:
+# In[122]:
 
 
 player_stats.columns
 
 
-# In[96]:
+# In[123]:
 
 
 player_stats.to_excel('player_stats.xlsx', index=False, engine='openpyxl')
 
 
-# In[97]:
+# In[124]:
 
 
 wimus
 
 
-# In[98]:
+# In[125]:
 
 
 #wimus.to_excel('wimuspoint.xlsx', index=False, engine='openpyxl')
 
 
-# In[99]:
+# In[126]:
 
 
 player_stats.columns
 
 
-# In[100]:
+# In[127]:
 
 
 # import plotly.express as px # type: ignore
@@ -2715,7 +2683,7 @@ player_stats.columns
 
 # ## Analyze the Serve/Return patterns of each player
 
-# In[101]:
+# In[128]:
 
 
 import pandas as pd
@@ -2734,7 +2702,7 @@ pat = wimus[selected_columns]
 
 
 
-# In[102]:
+# In[129]:
 
 
 pat = pat.copy()
@@ -2753,7 +2721,7 @@ pat['GameConcat'] = pat.apply(
 
 
 
-# In[103]:
+# In[130]:
 
 
 # Shift the ScoreConcat and GameConcat columns by 1 to assign previous row values
@@ -2770,13 +2738,13 @@ pat.loc[pat['PointNumber'].astype(str).str.startswith('0X'), ['Score', 'Games']]
 pat.iloc[-1, pat.columns.get_loc('Score')] = pat.iloc[-2]['ScoreConcat']
 
 
-# In[104]:
+# In[131]:
 
 
 pat.head(200)
 
 
-# In[105]:
+# In[132]:
 
 
 # Create player1_e and player2_e columns
@@ -2793,7 +2761,7 @@ pat['player2_e'] = pat['player2'].apply(lambda x: 1 if x in top_players else 0)
 pat
 
 
-# In[106]:
+# In[133]:
 
 
 # import seaborn as sns
@@ -2830,7 +2798,7 @@ pat
 # plt.show()
 
 
-# In[108]:
+# In[134]:
 
 
 # # ServeWidth distribution
@@ -2850,7 +2818,7 @@ pat
 # plt.show()
 
 
-# In[109]:
+# In[135]:
 
 
 # import seaborn as sns
@@ -2890,27 +2858,27 @@ pat
 
 
 
-# In[110]:
+# In[136]:
 
 
-# ServeWidth distribution
-plt.subplot(1, 2, 1)
-sns.histplot(filtered_pat2['ServeWidth'], kde=True, bins=10, color='green')
-plt.title('ServeWidth Distribution of an Elite Player facing break points')
-plt.xlabel('ServeWidth')
-plt.ylabel('Frequency')
+# # ServeWidth distribution
+# plt.subplot(1, 2, 1)
+# sns.histplot(filtered_pat2['ServeWidth'], kde=True, bins=10, color='green')
+# plt.title('ServeWidth Distribution of an Elite Player facing break points')
+# plt.xlabel('ServeWidth')
+# plt.ylabel('Frequency')
 
-plt.subplot(1, 2, 2)
-sns.histplot(filtered_pat3['ServeWidth'], kde=True, bins=20, color='green')
-plt.title('ServeWidth Distribution of an Elite Player on serve and play normal points')
-plt.xlabel('ServeWidth')
-plt.ylabel('Frequency')
+# plt.subplot(1, 2, 2)
+# sns.histplot(filtered_pat3['ServeWidth'], kde=True, bins=20, color='green')
+# plt.title('ServeWidth Distribution of an Elite Player on serve and play normal points')
+# plt.xlabel('ServeWidth')
+# plt.ylabel('Frequency')
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
 
 
-# In[ ]:
+# In[137]:
 
 
 # import seaborn as sns
@@ -2944,39 +2912,39 @@ plt.show()
 # plt.show()
 
 
-# In[ ]:
+# In[138]:
 
 
-# 1. Filter for specific Score values
-selected_scores = ['0-0', '15-0', '0-15', '30-0', '0-30', '30-15', '15-30', 
-                   '40-15', '15-40', '40-0', '0-40', '40-30', '30-40', 
-                   '40-40', 'AD-40', '40-AD']
-filtered_pat = pat[pat['Score'].isin(selected_scores)]
+# # 1. Filter for specific Score values
+# selected_scores = ['0-0', '15-0', '0-15', '30-0', '0-30', '30-15', '15-30', 
+#                    '40-15', '15-40', '40-0', '0-40', '40-30', '30-40', 
+#                    '40-40', 'AD-40', '40-AD']
+# filtered_pat = pat[pat['Score'].isin(selected_scores)]
 
-# 2. Concatenate ServeDepth and ServeWidth to create ServeDepthWidth
-filtered_pat['ServeDepthWidth'] = filtered_pat['ServeDepth'] + "_" + filtered_pat['ServeWidth']
+# # 2. Concatenate ServeDepth and ServeWidth to create ServeDepthWidth
+# filtered_pat['ServeDepthWidth'] = filtered_pat['ServeDepth'] + "_" + filtered_pat['ServeWidth']
 
-# 3. Group by Score and calculate proportions
-grouped = filtered_pat.groupby(['Score', 'ServeDepthWidth']).size().unstack(fill_value=0)
-proportions = grouped.div(grouped.sum(axis=1), axis=0) * 100  # Convert to percentages
+# # 3. Group by Score and calculate proportions
+# grouped = filtered_pat.groupby(['Score', 'ServeDepthWidth']).size().unstack(fill_value=0)
+# proportions = grouped.div(grouped.sum(axis=1), axis=0) * 100  # Convert to percentages
 
-# 4. Plot stacked bar chart
-ax = proportions.plot(kind='bar', stacked=True, figsize=(12, 8), colormap='viridis')
+# # 4. Plot stacked bar chart
+# ax = proportions.plot(kind='bar', stacked=True, figsize=(12, 8), colormap='viridis')
 
-# Add labels and title
-ax.set_title('ServeDepthWidth Distribution by Selected Scores (Percentage)', fontsize=14)
-ax.set_ylabel('Percentage', fontsize=12)
-ax.set_xlabel('Score', fontsize=12)
-ax.legend(title='ServeDepthWidth', bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.tight_layout()
+# # Add labels and title
+# ax.set_title('ServeDepthWidth Distribution by Selected Scores (Percentage)', fontsize=14)
+# ax.set_ylabel('Percentage', fontsize=12)
+# ax.set_xlabel('Score', fontsize=12)
+# ax.legend(title='ServeDepthWidth', bbox_to_anchor=(1.05, 1), loc='upper left')
+# plt.tight_layout()
 
-# Display the plot
-plt.show()
+# # Display the plot
+# plt.show()
 
 
 # # FINAL DASHBOARD
 
-# In[ ]:
+# In[139]:
 
 
 import panel as pn
@@ -3352,386 +3320,10 @@ template.servable()
 template.show()
 
 
-# In[ ]:
+# In[142]:
 
 
-get_ipython().system('jupyter nbconvert --to script pointsbypoints-minhtrinh.ipynb')
-
-
-# In[ ]:
-
-
-import panel as pn
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import matplotlib.image as mpimg
-import os
-
-# Initialize Panel extension
-pn.extension()
-
-# Title and Introduction
-header = pn.pane.Markdown("## Player Statistics Dashboard presented by Minh Trinh, collaborated with Professor Eren Bilen")
-intro = pn.pane.Markdown("""
-Welcome to the Complex Tennis Player Statistics Interactive Dashboard!
-This interactive dashboard illustrates a comprehensive overview of individual player statistics in Grand Slam 
-events from 2019 to 2023. You can compare the selected player’s performance against the averages of other
-elite and non-elite players, as well as visualize their serve distribution.""")
-comparison_table_title = pn.pane.Markdown("""
-### Comparison Table: Player vs Elite vs Non-Elite Statistics  
-""")
-# Sidebar Dropdown for Player Selection
-selected_player_widget = pn.widgets.Select(
-    name="Select Player", 
-    options=list(player_stats['player_name'].unique()),  # Convert to list
-    value=player_stats['player_name'].iloc[0],
-    width=200,
-    sizing_mode="stretch_width"
-)
-image_path = "novakthegoat.jpg"  # Replace with the correct path if it's not in the working directory
-
-if os.path.exists(image_path):
-    sidebar_image = pn.layout.Column(
-        pn.pane.JPG(image_path, width=300, height=200),
-        align="center"
-    )
-else:
-    print(f"Image '{image_path}' not found. Using a placeholder.")
-    sidebar_image = pn.pane.Markdown("### [Image Not Found]")
-
-# Calculate Average Stats for Elite and Non-Elite Players
-elite_avg_stats = player_stats[player_stats["elite_numeric"] == 1].mean(numeric_only=True)
-non_elite_avg_stats = player_stats[player_stats["elite_numeric"] == 0].mean(numeric_only=True)
-
-# Function to create comparison table
-def create_comparison_table(selected_player):
-    player_data = player_stats[player_stats["player_name"] == selected_player].iloc[0]
-    
-    comparison_table = pd.DataFrame({
-        "Metric": [
-            "Grand Slam Matches Win%","Avg 1st Serve Speed (KM/H)", "Avg 2nd Serve Speed (KM/H)", "Matches Played", 
-            "Aces per Match", "Double Faults per Match",
-            "Not Deep Return per Match", "Deep Return per Match", "1st Serve In per Match",
-            "1st Serve Won per Match", "2nd Serve Won per Match", "Break Points Saved per Match",
-            "Break Points Faced per Match", "Break Points Saved Percentage", "Deficit per Match",
-            "Forehand Winners per Match", "Backhand Winners per Match", "0-4 Rallies Win %", "5-8 Rallies Win %"
-            , "9+ Rallies Win %"
-        ],
-        f"{selected_player}'s Stats": [
-            player_data["Match_Win_Percentage"],player_data["Avg_1st_ServeSpeed"], player_data["Avg_2nd_ServeSpeed"], player_data["match_played"],
-            player_data["avg_ace"], player_data["avg_df"],
-            player_data["ND_per_match"], player_data["D_per_match"], player_data["1stIn_per_match"],
-            player_data["1stWon_per_match"], player_data["2ndWon_per_match"], player_data["bpSaved_per_match"],
-            player_data["bpFaced_per_match"], player_data["bpSaved%"], player_data["avg_deficit"],
-            player_data["avg_Forehand"], player_data["avg_Backhand"],player_data["0-4_%"],
-            player_data["5-8_%"],player_data["9+_%"]
-        ],
-        "Elite Players' Average": [
-            elite_avg_stats["Match_Win_Percentage"],elite_avg_stats["Avg_1st_ServeSpeed"], elite_avg_stats["Avg_2nd_ServeSpeed"], elite_avg_stats["match_played"],
-            elite_avg_stats["avg_ace"], elite_avg_stats["avg_df"],
-            elite_avg_stats["ND_per_match"], elite_avg_stats["D_per_match"], elite_avg_stats["1stIn_per_match"],
-            elite_avg_stats["1stWon_per_match"], elite_avg_stats["2ndWon_per_match"], elite_avg_stats["bpSaved_per_match"],
-            elite_avg_stats["bpFaced_per_match"], elite_avg_stats["bpSaved%"], elite_avg_stats["avg_deficit"],
-            elite_avg_stats["avg_Forehand"], elite_avg_stats["avg_Backhand"],elite_avg_stats["0-4_%"],
-            elite_avg_stats["5-8_%"],elite_avg_stats["9+_%"]
-        ],
-        "Non-Elite Players' Average": [
-            non_elite_avg_stats["Match_Win_Percentage"],non_elite_avg_stats["Avg_1st_ServeSpeed"], non_elite_avg_stats["Avg_2nd_ServeSpeed"], non_elite_avg_stats["match_played"],
-            non_elite_avg_stats["avg_ace"], non_elite_avg_stats["avg_df"],
-            non_elite_avg_stats["ND_per_match"], non_elite_avg_stats["D_per_match"], non_elite_avg_stats["1stIn_per_match"],
-            non_elite_avg_stats["1stWon_per_match"], non_elite_avg_stats["2ndWon_per_match"], non_elite_avg_stats["bpSaved_per_match"],
-            non_elite_avg_stats["bpFaced_per_match"], non_elite_avg_stats["bpSaved%"], non_elite_avg_stats["avg_deficit"],
-           non_elite_avg_stats["avg_Forehand"], non_elite_avg_stats["avg_Backhand"], non_elite_avg_stats["0-4_%"],
-            non_elite_avg_stats["5-8_%"],non_elite_avg_stats["9+_%"]
-        ]
-    })
-    
-    # Ensure that values are numeric and format with 2 decimals without trailing zeros
-    for col in comparison_table.columns[1:]:
-        comparison_table[col] = comparison_table[col].apply(lambda x: f"{x:.2f}".rstrip('0').rstrip('.'))
-    
-    return comparison_table
-
-def highlight_values(row):
-    """
-    Apply color formatting to highlight the highest and lowest values in a row.
-    Green for the largest value, red for the smallest value.
-
-    Args:
-        row (pd.Series): A row of numeric values.
-
-    Returns:
-        list: A list of CSS styles for each value in the row.
-    """
-    # Convert row to numeric values, ignoring non-numeric values
-    numeric_values = pd.to_numeric(row, errors='coerce')
-
-    # Identify max and min values (ignoring NaNs)
-    max_val = numeric_values.max()
-    min_val = numeric_values.min()
-
-    # Apply colors based on max and min values
-    colors = [
-        "color: green;" if value == max_val else
-        "color: red;" if value == min_val else
-        ""
-        for value in numeric_values
-    ]
-    return colors
-# Function to update the dashboard dynamically
-def update_dashboard(event):
-    selected_player = selected_player_widget.value
-    comparison_table = create_comparison_table(selected_player)
-    
-    # Apply styling to the table
-    styled_table = (
-        comparison_table.set_index("Metric")
-        .style.apply(highlight_values, axis=1, subset=[f"{selected_player}'s Stats", "Elite Players' Average", "Non-Elite Players' Average"])
-    )
-    
-    comparison_table_pane.object = styled_table
-
-# Create initial comparison table for the first player
-comparison_table_pane = pn.pane.DataFrame(create_comparison_table(selected_player_widget.value), width=600, height=200)
-
-# Watch the player selection to update the table
-selected_player_widget.param.watch(update_dashboard, 'value')
-
-
-# Watch the player selection to update the table
-selected_player_widget.param.watch(update_dashboard, 'value')
-
-
-####################################################################################################################
-
-# Define court regions
-regions_ctl = {
-    'W': {'x_min': 14, 'x_max': 16.25, 'y_min': 13, 'y_max': 18, 'color': '#d7d7d7'},
-    'BW': {'x_min': 16.25, 'x_max': 18.5, 'y_min': 13, 'y_max': 18, 'color': '#1f1f1f'},
-    'B': {'x_min': 18.5, 'x_max': 20.75, 'y_min': 13, 'y_max': 18, 'color': '#141414'},
-    'BC': {'x_min': 20.75, 'x_max': 23, 'y_min': 13, 'y_max': 18, 'color': '#2d2d2d'},
-    'C': {'x_min': 23, 'x_max': 25, 'y_min': 13, 'y_max': 18, 'color': '#484848'}
-}
-regions_nctl = {
-    'W': {'x_min': 14, 'x_max': 16.25, 'y_min': 18, 'y_max': 23, 'color': '#4d4d4d'},
-    'BW': {'x_min': 16.25, 'x_max': 18.5, 'y_min': 18, 'y_max': 23, 'color': '#a7a7a7'},
-    'B': {'x_min': 18.5, 'x_max': 20.75, 'y_min': 18, 'y_max': 23, 'color': '#636363'},
-    'BC': {'x_min': 20.75, 'x_max': 23, 'y_min': 18, 'y_max': 23, 'color': '#888888'},
-    'C': {'x_min': 23, 'x_max': 25, 'y_min': 18, 'y_max': 23, 'color': '#ffffff'}
-}
-
-# Define label positions
-label_positions = {
-    'NCTL_C': {'x': 45, 'y': 35},
-    'NCTL_BC': {'x': 40, 'y': 45},
-    'NCTL_B': {'x': 25, 'y': 45},
-    'NCTL_BW': {'x': 15, 'y': 35},
-    'NCTL_W': {'x': 5, 'y': 45},
-    'CTL_C': {'x': 45, 'y': 15},
-    'CTL_BC': {'x': 42, 'y': 5},
-    'CTL_B': {'x': 22, 'y': 7},
-    'CTL_BW': {'x': 7, 'y': 5},
-    'CTL_W': {'x': 5, 'y': 15}
-}
-
-# Function to prepare serve data for a player
-def prepare_player_serve_data(player_name):
-    player_data = player_stats[player_stats['player_name'] == player_name]
-    serve_data = []
-    for col in player_data.columns:
-        if col.startswith("CTL") or col.startswith("NCTL"):
-            serve_depth, serve_width = col.split("_")
-            count = player_data[col].values[0]
-            serve_data.append({
-                "ServeDepth": serve_depth,
-                "ServeWidth": serve_width,
-                "count": count
-            })
-    serve_df = pd.DataFrame(serve_data)
-    total_shots = serve_df['count'].sum()
-    serve_df['percentage'] = (serve_df['count'] / total_shots) * 100
-    return serve_df
-
-# Function to add labels
-def add_labels_for_regions(data_counts, label_positions, region_type, regions):
-    for _, row in data_counts.iterrows():
-        serve_width = row['ServeWidth']
-        count = row['count']
-        percentage = row['percentage']
-
-        # Construct the key dynamically
-        label_key = f"{region_type}_{serve_width}"
-
-        # Check if label_key exists in label_positions
-        if label_key in label_positions:
-            x = label_positions[label_key]['x']
-            y = label_positions[label_key]['y']
-        else:
-            raise ValueError(f"Label position for '{label_key}' not defined in label_positions.")
-
-        # Label content
-        label = f"{region_type} {serve_width}\n{count} shots\n({percentage:.2f}%)"
-        
-        # Draw line to region center
-        region_center_x = (regions[serve_width]['x_min'] + regions[serve_width]['x_max']) / 2
-        region_center_y = (regions[serve_width]['y_min'] + regions[serve_width]['y_max']) / 2
-        plt.plot([x, region_center_x], [y, region_center_y], color='white', lw=1)
-
-        # Add label background box
-        label_box = patches.FancyBboxPatch(
-            (x - 6, y - 3.5), 12, 7, boxstyle="round,pad=0.3",
-            edgecolor='none', facecolor=regions[serve_width]['color'], alpha=0.6
-        )
-        plt.gca().add_patch(label_box)
-        
-        # Add text
-        plt.text(x, y, label, fontsize=9, ha='center', va='center', color='black')
-
-# Function to dynamically assign colors based on serve percentages
-def assign_dynamic_colors(regions, data_counts):
-    """
-    Assign colors to regions dynamically based on serve percentages, using a seismic color scale.
-
-    Args:
-        regions (dict): Dictionary of regions (CTL or NCTL).
-        data_counts (pd.DataFrame): Serve data with percentage for each region.
-
-    Returns:
-        dict: Updated regions with dynamically assigned colors.
-    """
-    # Normalize percentages between -1 and 1 for seismic color mapping
-    percentages = data_counts['percentage'].values
-    normalized = 2 * ((percentages - percentages.min()) / (percentages.max() - percentages.min())) - 1 if len(percentages) > 1 else [0] * len(percentages)
-
-    # Map normalized values to the seismic color scale
-    for region, norm_val in zip(data_counts['ServeWidth'], normalized):
-        if norm_val < 0:
-            # Blue to white (low values): interpolate between Blue (#0000FF) and White (#FFFFFF)
-            r = int(255 * (1 + norm_val))  # Increase red
-            g = int(255 * (1 + norm_val))  # Increase green
-            b = 255  # Blue remains max
-        else:
-            # White to red (high values): interpolate between White (#FFFFFF) and Red (#FF0000)
-            r = 255  # Red remains max
-            g = int(255 * (1 - norm_val))  # Decrease green
-            b = int(255 * (1 - norm_val))  # Decrease blue
-
-        color = f'#{r:02x}{g:02x}{b:02x}'  # Seismic hex color
-        regions[region]['color'] = color
-
-    return regions
-
-def load_court_image():
-    court_img_path = '/Users/minhtrinh/wim/wimbledon_grass_court.jpg'
-    if os.path.exists(court_img_path):
-        return mpimg.imread(court_img_path)
-    else:
-        print("Court image not found. Using a placeholder.")
-        return np.ones((500, 500, 3))  # White placeholder image
-    
-def plot_combined_serve_distribution(player_name):
-    """
-    Plot the combined serve distribution for the selected player.
-    Args:
-        player_name (str): Name of the selected player.
-    Returns:
-        matplotlib.figure.Figure: The plot figure for Panel rendering.
-    """
-    # Prepare serve data
-    serve_df = prepare_player_serve_data(player_name)
-
-    # Separate CTL and NCTL data
-    ctl_data = serve_df[serve_df['ServeDepth'] == 'CTL']
-    nctl_data = serve_df[serve_df['ServeDepth'] == 'NCTL']
-
-    # Assign dynamic colors based on percentages
-    assign_dynamic_colors(regions_ctl, ctl_data)
-    assign_dynamic_colors(regions_nctl, nctl_data)
-
-    # Create the plot
-    fig, ax = plt.subplots(figsize=(10, 7))
-    court_img = load_court_image()
-    ax.imshow(court_img, extent=[0, 50, 0, 50])
-    ax.set_xlim(0, 50)
-    ax.set_ylim(0, 50)
-
-    # Plot CTL regions
-    for region, data in regions_ctl.items():
-        ax.add_patch(patches.Rectangle(
-            (data['x_min'], data['y_min']),
-            data['x_max'] - data['x_min'], 
-            data['y_max'] - data['y_min'], 
-            linewidth=1, edgecolor='black', facecolor=data['color'], alpha=0.5
-        ))
-
-    # Plot NCTL regions
-    for region, data in regions_nctl.items():
-        ax.add_patch(patches.Rectangle(
-            (data['x_min'], data['y_min']),
-            data['x_max'] - data['x_min'], 
-            data['y_max'] - data['y_min'], 
-            linewidth=1, edgecolor='black', facecolor=data['color'], alpha=0.5
-        ))
-
-    # Add labels for CTL and NCTL regions
-    add_labels_for_regions(ctl_data, label_positions, 'CTL', regions_ctl)
-    add_labels_for_regions(nctl_data, label_positions, 'NCTL', regions_nctl)
-
-    # Titles and axis labels
-    ax.set_title(f'Serve Distribution by {player_name}', fontsize=18, weight='bold')
-    ax.set_xlabel('Serve Width', fontsize=15)
-    ax.set_ylabel('Serve Depth', fontsize=15, rotation=0, labelpad=40)
-    return fig
-
-# Updated: Panel integration for serve distribution
-serve_distribution_pane = pn.pane.Matplotlib(
-    plot_combined_serve_distribution(selected_player_widget.value), 
-    width=800, height=600
-)
-
-# Updated: Watch player selection for serve graph
-def update_serve_graph(event):
-    serve_distribution_pane.object = plot_combined_serve_distribution(selected_player_widget.value)
-
-selected_player_widget.param.watch(update_serve_graph, 'value')
-
-# Updated: Create comparison table dynamically
-comparison_table_pane = pn.pane.DataFrame(
-    create_comparison_table(selected_player_widget.value), 
-    width=600, height=400
-)
-
-# Updated: Dynamic dashboard layout
-template = pn.template.FastListTemplate(
-    title='Complex Professional Tennis Player Statistics in Grand Slams from 2019-2023', 
-    sidebar=[
-        pn.pane.Markdown("# Complex Player Statistics Interactive Dashboard"), 
-        pn.pane.Markdown("### This dashboard is presented by Minh Trinh in collaboration with professor Eren Bilen. \n Contact: quangminh711@gmail.com"),
-        intro,
-        sidebar_image,
-        selected_player_widget
-    ],
-    main=[
-        pn.Row(
-            pn.Column(width=150),
-            pn.Column(comparison_table_title, comparison_table_pane, margin=(0, 25), width=300)
-        ),
-        pn.Row(
-            serve_distribution_pane
-        )
-    ],
-    accent_base_color="#90EE90",  
-    header_background="#90EE90", 
-    sidebar_background="#f0f0f0",
-    footer=pn.pane.Markdown(
-        "© 2024 Player Stats Dashboard by Minh Trinh \n Contact: quangminh711@gmail.com", 
-        style={"text-align": "center", "font-size": "14px", "color": "#888"}
-    )
-)
-
-template.servable()
-template.show()
+get_ipython().system('jupyter nbconvert --to script Copy1pointsbypoints-minhtrinh-Copy1.ipynb')
 
 
 # In[ ]:
