@@ -403,15 +403,15 @@ template = pn.template.FastListTemplate(
     ],
     accent_base_color="#90EE90",  
     header_background="#90EE90", 
-    sidebar_background="#f0f0f0"}
+    sidebar_background="#f0f0f0"
     )
-)
+
 
 template.servable()
 template.show()
 
 
-# In[ ]:
+# In[3]:
 
 
 get_ipython().system('jupyter nbconvert --to script test.ipynb')
