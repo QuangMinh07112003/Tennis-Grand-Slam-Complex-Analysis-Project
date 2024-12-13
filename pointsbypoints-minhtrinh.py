@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[113]:
 
 
 import pandas as pd
 from IPython.display import display, HTML
-
+import streamlit
 
 
 
@@ -1559,7 +1559,7 @@ grouped_data = wimus_long.groupby('player_name').agg(
 
 
 
-# In[ ]:
+# In[53]:
 
 
 import pandas as pd
@@ -1655,7 +1655,7 @@ player_stats = pd.merge(player_stats, matches_played, how='left', on='player_nam
 player_stats
 
 
-# In[ ]:
+# In[54]:
 
 
 # Ensure matches_as_winner is a Series with player_name as index
@@ -1671,7 +1671,7 @@ player_stats['Match_Win_Percentage'] = (player_stats['matches_as_winner'] / play
 player_stats
 
 
-# In[ ]:
+# In[55]:
 
 
 # Now map the heights as before
@@ -1682,7 +1682,7 @@ loser_ht_map = dict(zip(gs['loser_name'], gs['loser_ht']))
 player_stats['height'] = player_stats['player_name'].map(winner_ht_map).fillna(player_stats['player_name'].map(loser_ht_map))
 
 
-# In[ ]:
+# In[56]:
 
 
 # Create a dictionary to map player_name to their height (both winners and losers)
@@ -1694,7 +1694,7 @@ player_stats['height'] = player_stats['player_name'].map(winner_ht_map).fillna(p
 
 
 
-# In[ ]:
+# In[57]:
 
 
 import pandas as pd
@@ -1711,7 +1711,7 @@ player_stats = player_stats[na_counts <= 5]
 
 
 
-# In[ ]:
+# In[58]:
 
 
 import pandas as pd
@@ -1756,7 +1756,7 @@ merged_stats = merge_and_aggregate(gs, player_stats)
 merged_stats
 
 
-# In[ ]:
+# In[59]:
 
 
 # Filter for matches where Adrian Mannarino appears as a winner or loser
@@ -1772,7 +1772,7 @@ mannarino_1stIn = (
 print(f"Total 1stIn for Adrian Mannarino: {mannarino_1stIn}")
 
 
-# In[ ]:
+# In[60]:
 
 
 # Count appearances as a winner
@@ -1788,7 +1788,7 @@ print(f"Adrian Mannarino appeared in {mannarino_total_appearances} matches.")
 print(f"As winner: {mannarino_as_winner}, As loser: {mannarino_as_loser}")
 
 
-# In[ ]:
+# In[61]:
 
 
 import pandas as pd
@@ -1836,7 +1836,7 @@ player_stats = classify_rank_elite(gs, player_stats)
 
 
 
-# In[ ]:
+# In[62]:
 
 
 # Filter the players where rank_elite is 'E'
@@ -1846,7 +1846,7 @@ elite_players = player_stats[player_stats['rank_elite'] == 'E']['player_name'].t
 print(elite_players)
 
 
-# In[ ]:
+# In[63]:
 
 
 import pandas as pd
@@ -1893,7 +1893,7 @@ plot_avg_1st_serve_by_rank_elite(player_stats)
 
 
 
-# In[ ]:
+# In[64]:
 
 
 import pandas as pd
@@ -1940,7 +1940,7 @@ plot_avg_1st_serve_by_rank_elite(player_stats)
 
 # This implies that in fact the Elite player has a weaker serve in terms of speed, which suggested that speed is not a significant key component for being a great player. 
 
-# In[ ]:
+# In[65]:
 
 
 import pandas as pd
@@ -1975,7 +1975,7 @@ def plot_pie_charts_for_serve_depth_width(player_stats):
 plot_pie_charts_for_serve_depth_width(player_stats)
 
 
-# In[ ]:
+# In[66]:
 
 
 import pandas as pd
@@ -2017,7 +2017,7 @@ plot_pie_charts_for_return_depth(player_stats)
 
 # This graph implies that the variations and percentage of service position does not significantly contribute to the differences in performance between elite players and non elite players
 
-# In[ ]:
+# In[67]:
 
 
 # Assuming '1stIn', '1stWon', and 'match_played' are existing columns in the player_stats DataFrame
@@ -2030,7 +2030,7 @@ player_stats['1stWon_per_match'] = player_stats['1stWon'] / player_stats['match_
 player_stats[['player_name', '1stIn', '1stWon', 'match_played', '1stIn_per_match', '1stWon_per_match']].head()
 
 
-# In[ ]:
+# In[68]:
 
 
 import matplotlib.pyplot as plt
@@ -2072,7 +2072,7 @@ plt.show()
 
 # This implies that the elite players have a considerable average number of 1st serve in and 1st serve won compared to the non-elite players, with about 20 units for each category. Even though by percentage, 20 units is not that significant, however, during professional matches, every point matters, and 20 points are about 5 games of tennis. These 20 points only counts for 1st Serve In and 1st Serve Won, not to mention 2nd Serves, which differentiates between great players and those who are yet to be. 
 
-# In[ ]:
+# In[69]:
 
 
 player_stats['2ndWon_per_match'] = player_stats['2ndWon'] / player_stats['match_played']
@@ -2089,7 +2089,7 @@ player_stats[['player_name', '1stIn', '1stWon', 'match_played', '1stIn_per_match
 player_stats = player_stats.dropna(thresh=player_stats.shape[1] - 5)
 
 
-# In[ ]:
+# In[70]:
 
 
 # Group the data by 'rank_elite' and calculate the mean for each variable
@@ -2144,7 +2144,7 @@ plt.show()
 
 # The graphs also imply that the elite players took the edge of number of 2nd Serve Point won per matches compared to the non-elite ones, by average of 6 points. In total for both first and second serve point, the elite players edged by 26 points, which is a significant number in professional tennis. Although they have fewer break point saved than their non-elite counterparts, it may be due to the fact that they faced considerably fewer break points than the non-elite. In terms of break point saved % (saved/faced), elite players again edged the non-elite by 6%, implying that the elites are clutcher. 
 
-# In[ ]:
+# In[71]:
 
 
 wimus['0-4'] = wimus['RallyCount'].apply(lambda x: 1 if 0 <= x <= 4 else 0)
@@ -2154,7 +2154,7 @@ wimus['9+'] = wimus['RallyCount'].apply(lambda x: 1 if x >= 9 else 0)
 
 
 
-# In[ ]:
+# In[72]:
 
 
 # Create columns for wins and losses by rally categories
@@ -2198,7 +2198,7 @@ result['9+_%'] = result['9+_w']*100 / (result['9+_w'] + result['9+_l'])
 
 
 
-# In[ ]:
+# In[73]:
 
 
 # Merge the result DataFrame (containing percentage columns) with player_stats
@@ -2209,7 +2209,7 @@ player_stats = player_stats.merge(result[['player_name', '0-4_%', '5-8_%', '9+_%
 
 
 
-# In[ ]:
+# In[74]:
 
 
 import pandas as pd
@@ -2237,7 +2237,7 @@ print(model.summary())
 # This regression model suggest that an 1cm increase in height may result in a 0.3 km/h increase in average first serve speed. It shows positive correlational relationship between the players' height and their average first serve speed.
 # 
 
-# In[ ]:
+# In[75]:
 
 
 import pandas as pd
@@ -2257,7 +2257,7 @@ deficit = last_points_per_match[['match_id', 'player1', 'player2', 'P1PointsWon'
 deficit
 
 
-# In[ ]:
+# In[76]:
 
 
 # Step 1: Sum P1Deficit for player1 and P2Deficit for player2, then combine them
@@ -2276,7 +2276,7 @@ total_def = total_def.rename(columns={'index': 'player_name'})
 total_def
 
 
-# In[ ]:
+# In[77]:
 
 
 # Step 1: Calculate total deficits by player across both `player1` and `player2`
@@ -2305,7 +2305,7 @@ player_stats
 #
 
 
-# In[ ]:
+# In[78]:
 
 
 player_stats['avg_deficit'] = player_stats['total_deficit'] / player_stats['match_played']
@@ -2313,7 +2313,7 @@ player_stats['avg_deficit'] = player_stats['total_deficit'] / player_stats['matc
 player_stats
 
 
-# In[ ]:
+# In[79]:
 
 
 player_stats['elite_numeric'] = player_stats['rank_elite'].map({'E': 1, 'NE': 0})
@@ -2346,13 +2346,13 @@ print(result.summary())
 # ## Regression Model Interpretation
 # The regression suggests that the number of 1st Serve In or 1st Serve Won has limited impact to the change in average deficit of the matches, while the fact a player is an elite or non-elite played a significant impact, as if one is an elite, they may earn more than 10 points compared to non-elite counterparts on average. Regarding the factor 1st Serve In multiplies with 1st Serve Won, it has little to no relationship with average deficit points per match. 
 
-# In[ ]:
+# In[80]:
 
 
 gs
 
 
-# In[ ]:
+# In[81]:
 
 
 import seaborn as sns
@@ -2376,7 +2376,7 @@ plt.show()
 # The linear regression suggests that the majority of data points is located below median of both variables, which means most matches are played between players with points below median.There is a wide spread of loser rank points for any given winner rank point, indicating variability in the rank points of losers. Some matches involve losers with very high rank points, which are outliers compared to the general trend.
 # 
 
-# In[ ]:
+# In[82]:
 
 
 # Scatterplot with linear regression line
@@ -2399,7 +2399,7 @@ plt.show()
 # P/S:
 # 
 
-# In[ ]:
+# In[83]:
 
 
 # Assuming player_stats has already been defined with Forehand_Winners, Backhand_Winners, and match_played
@@ -2409,7 +2409,7 @@ player_stats['avg_Forehand'] = player_stats['Forehand_Winners'] / player_stats['
 player_stats['avg_Backhand'] = player_stats['Backhand_Winners'] / player_stats['match_played']
 
 
-# In[ ]:
+# In[84]:
 
 
 import statsmodels.api as sm
@@ -2431,7 +2431,7 @@ print(logit_result.summary())
 
 
 
-# In[ ]:
+# In[85]:
 
 
 import statsmodels.api as sm
@@ -2492,7 +2492,7 @@ y_elite = regression_data_elite['avg_deficit_binary']
 
 
 
-# In[ ]:
+# In[86]:
 
 
 # Plot the heatmap
@@ -2521,7 +2521,7 @@ plt.show()
 # 
 # Elite_numeric and ranking points have strong positive correlation (0.77) as the elite players are mostly top players who earn higher ranking points that others.
 
-# In[ ]:
+# In[87]:
 
 
 import matplotlib.pyplot as plt
@@ -2556,13 +2556,13 @@ plt.show()
 
 # 
 
-# In[ ]:
+# In[88]:
 
 
 player_stats
 
 
-# In[ ]:
+# In[89]:
 
 
 # Save as Excel
@@ -2571,13 +2571,13 @@ player_stats
 
 # ## Create Dashboard
 
-# In[ ]:
+# In[90]:
 
 
 player_stats
 
 
-# In[ ]:
+# In[91]:
 
 
 # Calculate averages
@@ -2585,37 +2585,37 @@ player_stats['avg_ace'] = player_stats['ace'] / player_stats['match_played']
 player_stats['avg_df'] = player_stats['df'] / player_stats['match_played']
 
 
-# In[ ]:
+# In[92]:
 
 
 player_stats.columns
 
 
-# In[ ]:
+# In[93]:
 
 
 player_stats.to_excel('player_stats.xlsx', index=False, engine='openpyxl')
 
 
-# In[ ]:
+# In[94]:
 
 
 wimus
 
 
-# In[ ]:
+# In[95]:
 
 
 #wimus.to_excel('wimuspoint.xlsx', index=False, engine='openpyxl')
 
 
-# In[ ]:
+# In[96]:
 
 
 player_stats.columns
 
 
-# In[ ]:
+# In[97]:
 
 
 # import plotly.express as px # type: ignore
@@ -2714,7 +2714,7 @@ player_stats.columns
 
 # ## Analyze the Serve/Return patterns of each player
 
-# In[ ]:
+# In[98]:
 
 
 import pandas as pd
@@ -2733,7 +2733,7 @@ pat = wimus[selected_columns]
 
 
 
-# In[ ]:
+# In[99]:
 
 
 pat = pat.copy()
@@ -2752,7 +2752,7 @@ pat['GameConcat'] = pat.apply(
 
 
 
-# In[ ]:
+# In[100]:
 
 
 # Shift the ScoreConcat and GameConcat columns by 1 to assign previous row values
@@ -2769,13 +2769,13 @@ pat.loc[pat['PointNumber'].astype(str).str.startswith('0X'), ['Score', 'Games']]
 pat.iloc[-1, pat.columns.get_loc('Score')] = pat.iloc[-2]['ScoreConcat']
 
 
-# In[ ]:
+# In[101]:
 
 
 pat.head(200)
 
 
-# In[ ]:
+# In[102]:
 
 
 # Create player1_e and player2_e columns
@@ -2792,7 +2792,7 @@ pat['player2_e'] = pat['player2'].apply(lambda x: 1 if x in top_players else 0)
 pat
 
 
-# In[ ]:
+# In[103]:
 
 
 import seaborn as sns
@@ -2829,7 +2829,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[ ]:
+# In[104]:
 
 
 # ServeWidth distribution
@@ -2849,7 +2849,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[ ]:
+# In[105]:
 
 
 import seaborn as sns
@@ -2889,7 +2889,7 @@ plt.show()
 
 
 
-# In[ ]:
+# In[106]:
 
 
 # ServeWidth distribution
@@ -2909,7 +2909,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[ ]:
+# In[107]:
 
 
 import seaborn as sns
@@ -2943,7 +2943,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[ ]:
+# In[108]:
 
 
 # 1. Filter for specific Score values
@@ -2975,7 +2975,7 @@ plt.show()
 
 # # FINAL DASHBOARD
 
-# In[ ]:
+# In[109]:
 
 
 import panel as pn
@@ -3351,13 +3351,13 @@ template.servable()
 template.show()
 
 
-# In[ ]:
+# In[110]:
 
 
 get_ipython().system('jupyter nbconvert --to script pointsbypoints-minhtrinh.ipynb')
 
 
-# In[ ]:
+# In[112]:
 
 
 
