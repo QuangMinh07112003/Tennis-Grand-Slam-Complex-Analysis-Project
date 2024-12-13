@@ -1,14 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[1]:
 
 
 import pandas as pd
-player_stats = pd.read_csv("/Users/minhtrinh/independentminhtrinh/player_stats.csv")
+
+# The modified link to the Google Sheets CSV export
+google_sheet_url = 'https://docs.google.com/spreadsheets/d/1e8xUe2WUkDsmTg_lQ3L9a0uAFG1sb3lPmLtFDDwdwts/export?format=csv&id=1e8xUe2WUkDsmTg_lQ3L9a0uAFG1sb3lPmLtFDDwdwts&gid=493058242'
+
+# Load the data into a DataFrame directly from the CSV export link
+player_stats = pd.read_csv(google_sheet_url)
 
 
-# In[3]:
+
+# In[2]:
 
 
 import panel as pn
@@ -384,7 +390,7 @@ template.servable()
 template.show()
 
 
-# In[7]:
+# In[3]:
 
 
 get_ipython().system('jupyter nbconvert --to script test.ipynb')
