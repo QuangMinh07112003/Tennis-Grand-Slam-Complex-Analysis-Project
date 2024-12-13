@@ -14,7 +14,7 @@ player_stats = pd.read_csv(google_sheet_url)
 
 
 
-# In[4]:
+# In[5]:
 
 
 import panel as pn
@@ -23,6 +23,11 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.image as mpimg
 import os
+from PIL import Image  # Add this import statement
+import numpy as np
+import requests
+from io import BytesIO
+
 
 # Initialize Panel extension
 pn.extension()
@@ -278,14 +283,32 @@ def assign_dynamic_colors(regions, data_counts):
 
     return regions
 
-# Function to load the court image
-def load_court_image(image_path='court_image.png'):
+
+
+def load_court_image(drive_url):
     try:
-        court_img = Image.open(image_path)
+        # Extract file ID from the URL
+        file_id = drive_url.split('/d/')[1].split('/')[0]
+        
+        # Create the download URL
+        download_url = f'https://drive.google.com/uc?export=download&id={file_id}'
+        
+        # Send HTTP request to download the image
+        response = requests.get(download_url)
+        response.raise_for_status()  # Raise an error for bad status codes
+        
+        # Open the image from the downloaded content
+        court_img = Image.open(BytesIO(response.content))
         return np.array(court_img)  # Convert to NumPy array for plotting
-    except FileNotFoundError:
-        print(f"Image file '{image_path}' not found. Using a white placeholder.")
-        return np.ones((500, 500, 3))  # Return white placeholder if the image is not found
+    except Exception as e:
+        print(f"Error loading image: {e}. Using a white placeholder.")
+        return np.ones((500, 500, 3))  # Return white placeholder if an error occurs
+
+# Example usage:
+image_url = 'https://drive.google.com/file/d/1vZddjW1NgZpcwJrb5f_llqRaIGBS23cS/view?usp=sharing'
+court_img = load_court_image(image_url)
+
+
 
 def plot_combined_serve_distribution(player_name):
     """
@@ -308,7 +331,7 @@ def plot_combined_serve_distribution(player_name):
 
     # Create the plot
     fig, ax = plt.subplots(figsize=(10, 7))
-    court_img = load_court_image()
+    court_img = load_court_image(image_url)
     ax.imshow(court_img, extent=[0, 50, 0, 50])
     ax.set_xlim(0, 50)
     ax.set_ylim(0, 50)
