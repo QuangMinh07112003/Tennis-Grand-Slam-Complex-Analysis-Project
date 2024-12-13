@@ -14,7 +14,7 @@ player_stats = pd.read_csv(google_sheet_url)
 
 
 
-# In[2]:
+# In[4]:
 
 
 import panel as pn
@@ -278,14 +278,15 @@ def assign_dynamic_colors(regions, data_counts):
 
     return regions
 
-def load_court_image():
-    court_img_path = '/Users/minhtrinh/wim/wimbledon_grass_court.jpg'
-    if os.path.exists(court_img_path):
-        return mpimg.imread(court_img_path)
-    else:
-        print("Court image not found. Using a placeholder.")
-        return np.ones((500, 500, 3))  # White placeholder image
-    
+# Function to load the court image
+def load_court_image(image_path='court_image.png'):
+    try:
+        court_img = Image.open(image_path)
+        return np.array(court_img)  # Convert to NumPy array for plotting
+    except FileNotFoundError:
+        print(f"Image file '{image_path}' not found. Using a white placeholder.")
+        return np.ones((500, 500, 3))  # Return white placeholder if the image is not found
+
 def plot_combined_serve_distribution(player_name):
     """
     Plot the combined serve distribution for the selected player.
