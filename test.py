@@ -14,7 +14,7 @@ player_stats = pd.read_csv(google_sheet_url)
 
 
 
-# In[5]:
+# In[2]:
 
 
 import panel as pn
@@ -403,10 +403,7 @@ template = pn.template.FastListTemplate(
     ],
     accent_base_color="#90EE90",  
     header_background="#90EE90", 
-    sidebar_background="#f0f0f0",
-    footer=pn.pane.Markdown(
-        "© 2024 Player Stats Dashboard by Minh Trinh \n Contact: quangminh711@gmail.com", 
-        style={"text-align": "center", "font-size": "14px", "color": "#888"}
+    sidebar_background="#f0f0f0"}
     )
 )
 
@@ -414,7 +411,7 @@ template.servable()
 template.show()
 
 
-# In[3]:
+# In[ ]:
 
 
 get_ipython().system('jupyter nbconvert --to script test.ipynb')
