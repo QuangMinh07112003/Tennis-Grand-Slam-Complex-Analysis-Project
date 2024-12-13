@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[6]:
 
 
 import pandas as pd
-player_stats = pd.read_csv("player_stats.csv")
-player_stats
+player_stats = pd.read_csv("/Users/minhtrinh/independentminhtrinh/player_stats.csv")
 
 
 # In[3]:
@@ -385,8 +384,14 @@ template.servable()
 template.show()
 
 
-# In[ ]:
+# In[4]:
 
 
 get_ipython().system('jupyter nbconvert --to script test.ipynb')
+
+
+# In[ ]:
+
+
+
 
