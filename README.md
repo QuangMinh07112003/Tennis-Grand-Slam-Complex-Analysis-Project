@@ -3,7 +3,7 @@ This project is to analyze the performances of each player in Grand Slam matches
 
 My dashboard website: https://py.cafe/app/QuangMinh07112003/panel-tennis-stats
 
-Acknowledgments
+Acknowledgments:
 I would like to express my sincere thanks to Professor Eren Bilen for his invaluable collaboration and guidance throughout this project. His advice and expertise have been instrumental in shaping the research and its outcomes.
 
 References: 
